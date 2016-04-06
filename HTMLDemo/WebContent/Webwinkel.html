@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>De webwinkel.</title>
+<style>
+	#myDIV {
+		border: 5px solid cyan;
+		animation: borderflash 1s infinite;
+	}
+	
+	table {
+		border-spacing: 20px 20px;
+	}
+	tr { 
+		
+		animation: textflash 1s infinite;
+	}
+	th {
+		font-size: 400% ;
+		animation: color-change 1s infinite;
+	}
+	td { 
+		border-top: 5px solid brown;
+		border-left: 5px solid red;
+		border-right: 5px solid green;
+		border-bottom: 5px solid blue;
+		text-align: center;
+		font-size: 250%;
+		background-color: white;
+	}
+	body {
+		background-color : yellow;
+		cursor: url(file:///C:/Users/Student/workspace/HTMLDemo/WebContent/025.gif),url(file:///C:/Users/Student/workspace/HTMLDemo/WebContent/025.gif),auto;
+	}
+	
+	@keyframes color-change {
+    	0% { color: red; }
+    	17% { color: blue; }
+    	33% { color: green; }
+    	50% { color: red; }
+    	67% { color: blue; }
+    	83% { color: green; }
+    }
+    
+    @keyframes textflash {
+    	0% { color: red; }
+    	17% { color: white; }
+    	33% { color: red; }
+    	50% { color: white; }
+    	67% { color: red; }
+    	83% { color: white; }
+    	100%{ color: red; }
+    }
+    
+    @keyframes borderflash {
+    	0% { border: 5px solid blue; }
+    	17% { border: 5px solid green; }
+    	33% { border: 5px solid red; }
+    	50% { border: 5px solid blue; }
+    	67% { border: 5px solid green; }
+    	83% { border: 5px solid red; }
+    }
+</style>
+</head>
+<body>
+<div id="myDIV">
+<table>
+	<tr><th>Product</th><th>Prijs per stuk</th><th>Hoeveelheid</th></tr>
+	<tr><td><a href="https://nl.wikipedia.org/wiki/Koffie">Koffie</a></td><td><b>&euro;1,-</b></td><td>10</td></tr>
+	<tr><td><a href="file:///C:/Users/Student/workspace/HTMLDemo/WebContent/Taart.html">Taart</a></td><td><b>&euro;10,-</b></td><td>5</td></tr>
+	<tr><td><a href="file:///C:/Users/Student/workspace/HTMLDemo/WebContent/Brood.html">Brood</a></td><td><b>&euro;5,-</b></td><td>20</td></tr>
+</table>
+</div>
+</body>
+</html>
