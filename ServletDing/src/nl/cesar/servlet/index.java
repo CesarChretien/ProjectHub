@@ -1,7 +1,5 @@
 package nl.cesar.servlet;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HelloWorld
+ * Servlet implementation class index
  */
-@WebServlet("/HelloWorld")
-public class HelloWorld extends HttpServlet {
+@WebServlet("/index")
+public class index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HelloWorld() {
+    public index() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,21 +25,19 @@ public class HelloWorld extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		StringBuilder sb = new StringBuilder();
+		sb.append("<!DOCTYPE html>");
+		sb.append("<html>");
+		sb.append("<head>");
+		sb.append("<title> Servlet redirect test.");
+		sb.append("</title>");
+		sb.append("</head>");
+		sb.append("<body> Ik ben tekst.");
+		sb.append("</body>");
+		sb.append("</html>");
 		
-		StringBuilder contentBuilder = new StringBuilder();
-		try {
-		    BufferedReader in = new BufferedReader(new FileReader("file:///C:/Users/Student/Documents/ProjectHub/ServletDing/WebContent/Webwinkel.html"));
-		    String str;
-		    while ((str = in.readLine()) != null) {
-		        contentBuilder.append(str);
-		    }
-		    in.close();
-		} 
-		catch (IOException e) {}
-		String content = contentBuilder.toString();
-		response.getWriter().append(content);
+		response.getWriter().append(sb.toString());
 	}
 
 	/**
