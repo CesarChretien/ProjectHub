@@ -32,7 +32,7 @@ public class HelloWorld extends HttpServlet {
 		
 		StringBuilder contentBuilder = new StringBuilder();
 		try {
-		    BufferedReader in = new BufferedReader(new FileReader("file:///C:/Users/Student/Documents/ProjectHub/ServletDing/WebContent/Webwinkel.html"));
+		    BufferedReader in = new BufferedReader(new FileReader("../Documents/ProjectHub/ServletDing/WebContent/Webwinkel.html"));
 		    String str;
 		    while ((str = in.readLine()) != null) {
 		        contentBuilder.append(str);
