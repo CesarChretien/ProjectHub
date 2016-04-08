@@ -10,6 +10,10 @@
 		transform:rotate(-10deg);
 	}
 	
+	#hoi {
+		animation: txtmove 10s infinite
+	}
+	
 	#plaat {
 		border-radius: 50%;
 		animation: rotations 5s infinite;
@@ -20,16 +24,15 @@
     }
     
     @keyframes txtmove {
-     	 0%   {left: 0%;}
-    	50%  {left: 100%;}
-    	100% {left: 0%;}
+    	50%{ transform: scale(2);}
+    	100%{ transform: scale(1);}
     }
 </style>
 </head>
 <body>
 	<h3>Taart</h3>
 	<img id="plaat" src="http://i40.tinypic.com/5jrw94.png">
-	<p><marquee behavior="scroll" direction="right" id="txtline"><b>Taart smaakt prima en komt voor in vele vormen en maten.</b></marquee>
+	<p><marquee height="25" behavior="scroll" direction="right" id="txtline"><b id="hoi">Taart smaakt prima en komt voor in vele vormen en maten.</b></marquee>
 	<p>Klik <a href="Webwinkel.html">hier</a> om terug te gaan naar de webwinkel.
 </body>
 </html>
