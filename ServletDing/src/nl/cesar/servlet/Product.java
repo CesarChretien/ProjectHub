@@ -34,7 +34,12 @@ public class Product extends HttpServlet {
 		sb.append("</title>");
 		sb.append("</head>");
 		sb.append("<body>");
-		sb.append("<a href=\"./index\">Link.</a>");
+		sb.append("<form method=\"get\" action=\"/ServletDing/index\">");
+		sb.append("<input type=\"text\" name=\"\"><br>");
+		sb.append("<input type=\"submit\">");
+		sb.append("</form>");
+		sb.append("<p> Selected from list: " + request.getParameterValues("isTitles"));
+		sb.append("<p> I am a cookie: " + request.getSession());
 		sb.append("</body>");
 		sb.append("</html>");
 		
