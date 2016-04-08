@@ -4,20 +4,32 @@
 <meta charset="ISO-8859-1">
 <title>Omschrijving van taart.</title>
 <style>
-#plaat {
-	border-radius: 50%;
-	animation: rotations 5s infinite;
-}
-
-@keyframes rotations {
-    	100% {transform: rotate(360deg); }
-    	}
+	#txtline {
+		color: red;
+		background-color: yellow;
+		transform:rotate(-10deg);
+	}
+	
+	#plaat {
+		border-radius: 50%;
+		animation: rotations 5s infinite;
+	}
+	
+	@keyframes rotations {
+	    	100% {transform: rotate(360deg); }
+    }
+    
+    @keyframes txtmove {
+     	 0%   {left: 0%;}
+    	50%  {left: 100%;}
+    	100% {left: 0%;}
+    }
 </style>
 </head>
 <body>
 	<h3>Taart</h3>
 	<img id="plaat" src="http://i40.tinypic.com/5jrw94.png">
-	<p>Taart smaakt prima en komt voor in vele vormen en maten.
+	<p><marquee behavior="scroll" direction="right" id="txtline"><b>Taart smaakt prima en komt voor in vele vormen en maten.</b></marquee>
 	<p>Klik <a href="Webwinkel.html">hier</a> om terug te gaan naar de webwinkel.
 </body>
 </html>
