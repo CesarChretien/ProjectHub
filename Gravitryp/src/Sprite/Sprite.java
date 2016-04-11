@@ -17,11 +17,12 @@ public class Sprite {
 	protected static final String TRIANGLE = "triangle";
 	
 	//constructors
-	private Sprite(double xloc, double yloc, double xwidth, double ywidth) {
+	public Sprite(double xloc, double yloc, double xwidth, double ywidth) {
 		this(new Points(new Coordinate(xloc,yloc), SQUARE, xwidth, ywidth), 0);
 	}
-	private Sprite(Coordinate coord, double xwidth, double ywidth) {
-		
+	
+	public Sprite(double xloc, double yloc, String shape, double xwidth, double ywidth) {
+		this(new Points(new Coordinate(xloc,yloc), shape, xwidth, ywidth), 0);
 	}
 	
 	private Sprite(Points p, double angle) {
