@@ -1,5 +1,5 @@
 package Sprite;
 
-public class Planet {
+public class Planet extends Sprite{
 
 }
