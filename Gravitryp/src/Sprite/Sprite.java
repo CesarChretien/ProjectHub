@@ -137,5 +137,4 @@ public class Sprite {
 			return this.radius;
 		}
 	}
-	
 }
