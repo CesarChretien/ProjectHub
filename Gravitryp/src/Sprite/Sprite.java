@@ -2,15 +2,8 @@ package Sprite;
 
 public class Sprite {
 
-<<<<<<< HEAD
-	private double xloc; //x-coord of centre of sprite
-	private double xbox; //width of sprite
-	private double yloc; //y-coord of centre of sprite
-	private double ybox; //height of the sprite
-	private Points points;
-=======
+
 	private Points p; //set of points describing the sprite
->>>>>>> 055d51e1b7b397347bea953ccc58e23c107231cb
 	private double angle; //angle of the sprite
 	private String shape; //shape of the hitbox of the sprite
 	private boolean col; //checks if this sprite collides with another sprite
@@ -38,17 +31,13 @@ public class Sprite {
 	private Sprite(Points p, double angle) {
 		this.setPoints(p);
 		this.setAngle(angle);
-<<<<<<< HEAD
-=======
 	}
 	
 	//public boolean hasCollision(Sprite spr) {	}
-	
 	public void rotateLeft() {
 		for(Point points: this.getPoints()) {
 			points.setAngle((points.getAngle() + 5) % 360);
 		}
->>>>>>> 055d51e1b7b397347bea953ccc58e23c107231cb
 	}
 	
 	public void rotateRight() {
@@ -58,21 +47,12 @@ public class Sprite {
 	}
 	
 	//setters
-<<<<<<< HEAD
-	public void setPoints(Points points) { this.points = points; };
-	public void setAngle(double angle) { this.angle = angle; }
-	public void setShape(String shape) { this.shape = shape; }
-	
-	//getters
-	public double getangle(){ return this.angle; }
-=======
 	private void setPoints(Points p) { this.p = p; }
 	private void setAngle(double angle) { this.angle = angle; }
 	
 	//getters
 	public Point[] getPoints(){ return this.p.getPoints(); }
 	public double getAngle(){ return this.angle; }
->>>>>>> 055d51e1b7b397347bea953ccc58e23c107231cb
 	public String getShape(){ return this.shape; }
 	
 	//class Coordinate describing (x,y) coordinates
