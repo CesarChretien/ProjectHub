@@ -6,7 +6,7 @@ public class Sprite {
 	private double xbox; //width of sprite
 	private double yloc; //y-coord of centre of sprite
 	private double ybox; //height of the sprite
-	private Points p;
+	private Points points;
 	private double angle; //angle of the sprite
 	private String shape; //shape of the hitbox of the sprite
 	private boolean col; //checks if this sprite collides with another sprite
@@ -26,14 +26,8 @@ public class Sprite {
 	}
 	
 	private Sprite(Points p, double angle) {
-		this.setXbox(xbox);
-		this.setYbox(ybox);
+		this.setPoints(p);
 		this.setAngle(angle);
-		this.setShape(shape);
-	}
-	
-	private Sprite(Points p) {
-		this(p, 0);
 	}
 	
 	public boolean hasCollision(Sprite spr) {
@@ -43,18 +37,11 @@ public class Sprite {
 	}
 	
 	//setters
-	public void setXloc(double xloc){ this.xloc = xloc;	}
-	public void setYloc(double yloc){ this.yloc = yloc;	}
-	public void setXbox(double xbox){ this.xbox = xbox;	}
-	public void setYbox(double ybox){ this.ybox = ybox;	}
+	public void setPoints(Points points) { this.points = points; };
 	public void setAngle(double angle) { this.angle = angle; }
 	public void setShape(String shape) { this.shape = shape; }
 	
 	//getters
-	public double getXloc(){ return this.xloc; }
-	public double getYloc(){ return this.yloc; }
-	public double getXbox(){ return this.xbox; }
-	public double getYbox(){ return this.ybox; }
 	public double getangle(){ return this.angle; }
 	public String getShape(){ return this.shape; }
 	
