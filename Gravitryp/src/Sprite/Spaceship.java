@@ -7,7 +7,7 @@ public class Spaceship extends Sprite{
 	private int fuel;
 	private final double rotation = 4;
 	private final int accel = 1;
-	private final int max_speed = 3;
+	private final int max_speed = 15;
 	
 	//callable constructors
 	public Spaceship(int xloc, int yloc, int xwidth, int ywidth, int fuel, double travelangle) {
@@ -86,7 +86,7 @@ public class Spaceship extends Sprite{
 		return speed;
 	}
 	public void setSpeed(int speed) {
-		this.speed = (speed > 0) ? Math.max(speed, max_speed) : 0;
+		this.speed = (speed > 0) ? Math.min(speed, max_speed) : 0;
 	}
 	public int getFuel() {
 		return fuel;
