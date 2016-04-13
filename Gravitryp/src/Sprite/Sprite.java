@@ -33,20 +33,27 @@ public class Sprite {
 	}
 	public Sprite(int xloc, int yloc, String shape, int xwidth, int ywidth, double angle) {
 		this.setPoints(new Points(new Coordinate(xloc,yloc), shape, xwidth, ywidth));
+		System.out.println(angle);
 		this.setAngle(angle);
 	}
 	
 	//public boolean hasCollision(Sprite spr) {	}
 	public void rotateLeft() {
 		for(Point points: this.getPoints()) {
-			points.setAngle((points.getAngle() + 5) % 360);
+			points.setAngle((points.getAngle() + 4) % 360);
 		}
+		this.setRealAngle((this.getAngle() + 4) % 360);
 	}
 	
 	public void rotateRight() {
 		for(Point points: this.getPoints()) {
-			points.setAngle((points.getAngle() + 355) % 360);
+			points.setAngle((points.getAngle() + 356) % 360);
 		}
+		this.setRealAngle((this.getAngle() + 356) % 360);
+	}
+	
+	void setRealAngle(double angle) {
+		this.angle = angle;
 	}
 	
 	public int[] getXlist() {
@@ -65,9 +72,15 @@ public class Sprite {
 		return y;
 	}
 	
+
+	private void setAngle(double angle) { 
+		for(Point points: this.getPoints()) {
+			points.setAngle((points.getAngle() + angle) % 360);
+		}
+	}
+	
 	//setters
 	private void setPoints(Points p) { this.p = p; }
-	private void setAngle(double angle) { this.angle = angle; }
 	
 	//getters
 	public Point[] getPoints(){ return this.p.getPoints(); }

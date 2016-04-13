@@ -13,10 +13,10 @@ public class Point {
 		this.setDistance(distance);
 	}
 
-	private void setCoord(Coordinate coord) {
+	void setCoord(Coordinate coord) {
 		this.coord = coord;
 	}
-	private Coordinate getCoord() {
+	Coordinate getCoord() {
 		return this.coord;
 	}
 	void setAngle(double angle) {
