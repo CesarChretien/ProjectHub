@@ -15,13 +15,25 @@ public class Space extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1L;
 	//Spaceship(xloc, yloc, SHAPE, xwidth, ywidth, angle, fuel, travelangle)
     Spaceship ship = new Spaceship(300, 300, Sprite.TRIANGLE, 32, 32, 0, 100, 0);
+    boolean game_runs = false;
+    int FPS = 30;
 	
-	public Space() {
+	public Space(){
 		this.setLocation(100, 100);
 		this.setSize(800, 600);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.addKeyListener(this);
+		game_runs = true;
+		while( game_runs ) {
+			try {
+				ship.updateLocation(); this.repaint();
+				Thread.sleep(Math.round(1000.0/FPS));
+			}
+			catch (InterruptedException ie) {
+				game_runs = false;
+			}
+		}
 		
 	}
 	
@@ -34,6 +46,7 @@ public class Space extends JFrame implements KeyListener{
 	    System.out.println(ship.getYlist()[0] + " " +  ship.getYlist()[1] + " " + ship.getYlist()[2]);
 	    System.out.println("travelangle: " + ship.getTravelangle());
 	    System.out.println("shipangle: " + ship.getAngle());
+	    System.out.println("speed: " + ship.getSpeed());
 	    g.fillPolygon(ship.getXlist(), ship.getYlist(), ship.getYlist().length);
 	}
 

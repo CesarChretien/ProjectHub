@@ -2,12 +2,12 @@ package Sprite;
 
 public class Spaceship extends Sprite{
 
-	private int speed;
+	private double speed;
 	private double travelangle;
 	private int fuel;
 	private final double rotation = 4;
-	private final int accel = 1;
-	private final int max_speed = 15;
+	private final double accel = 0.1;
+	private final double max_speed = 5;
 	
 	//callable constructors
 	public Spaceship(int xloc, int yloc, int xwidth, int ywidth, int fuel, double travelangle) {
@@ -46,6 +46,22 @@ public class Spaceship extends Sprite{
 	}
 	
 	//movement
+	public void rotateLeft() {
+		for(Point points: super.getPoints()) {
+			points.setAngle((points.getAngle() + 4) % 360);
+		}
+		this.setRealAngle((super.getAngle() + 4) % 360);
+		this.updateLocation();
+	}
+	
+	public void rotateRight() {
+		for(Point points: super.getPoints()) {
+			points.setAngle((points.getAngle() + 356) % 360);
+		}
+		super.setRealAngle((super.getAngle() + 356) % 360);
+		this.updateLocation();
+	}
+	
 	public void move() {
 		if(this.getSpeed() == 0 || this.getAngle() == this.getTravelangle()) {
 			this.setTravelangle(this.getAngle());
@@ -82,10 +98,10 @@ public class Spaceship extends Sprite{
 	}
 	
 	//setters and getters
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
-	public void setSpeed(int speed) {
+	public void setSpeed(double speed) {
 		this.speed = (speed > 0) ? Math.min(speed, max_speed) : 0;
 	}
 	public int getFuel() {
@@ -100,5 +116,4 @@ public class Spaceship extends Sprite{
 	public void setTravelangle(double travelangle) {
 		this.travelangle = (travelangle + 360) % 360;
 	}
-
 }

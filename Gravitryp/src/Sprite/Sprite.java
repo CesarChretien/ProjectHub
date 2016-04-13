@@ -38,19 +38,6 @@ public class Sprite {
 	}
 	
 	//public boolean hasCollision(Sprite spr) {	}
-	public void rotateLeft() {
-		for(Point points: this.getPoints()) {
-			points.setAngle((points.getAngle() + 4) % 360);
-		}
-		this.setRealAngle((this.getAngle() + 4) % 360);
-	}
-	
-	public void rotateRight() {
-		for(Point points: this.getPoints()) {
-			points.setAngle((points.getAngle() + 356) % 360);
-		}
-		this.setRealAngle((this.getAngle() + 356) % 360);
-	}
 	
 	void setRealAngle(double angle) {
 		this.angle = angle;
