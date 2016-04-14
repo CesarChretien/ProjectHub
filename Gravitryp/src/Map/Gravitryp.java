@@ -2,8 +2,10 @@ package Map;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class Gravitryp extends JFrame implements KeyListener {
 	
 	BufferedImage img= null;{
 	try {
-		    img = ImageIO.read(new File("strawberry.jpg"));
+		    img = ImageIO.read(new File("./img/SpaceShipStill.png"));
 	}
 	catch (IOException ie) {
 		
@@ -31,13 +33,14 @@ public class Gravitryp extends JFrame implements KeyListener {
 	
 	private static final long serialVersionUID = 1L;
 	//Spaceship(xloc, yloc, SHAPE, xwidth, ywidth, angle, fuel, travelangle)
-    Spaceship ship = new Spaceship(300, 300, Sprite.TRIANGLE, 64, 32, 0, 100, 0);
+    Spaceship ship = new Spaceship(300, 300, Sprite.TRIANGLE, img.getWidth(), img.getHeight(), 0, 100, 0);
     boolean game_runs = false;
     int FPS = 60;
     boolean up = false;
     boolean down = false;
     boolean left = false;
     boolean right = false;
+    AffineTransform identity = new AffineTransform();
     
 	public Gravitryp () {
 	    Space space = new Space();
@@ -113,6 +116,14 @@ public class Gravitryp extends JFrame implements KeyListener {
 		public void paint(Graphics g) {
 			g.setColor(Color.green);
 	    	g.fillPolygon(ship.getXlist(), ship.getYlist(), ship.getYlist().length);
+	    	//g.drawImage(img, (int)(Math.round(ship.getPoints()[0].getCoord().getX()) - 0.5*img.getWidth()), (int)(Math.round(ship.getPoints()[0].getCoord().getY()) - 0.5*img.getHeight()), null);
+	    	Graphics2D g2d = (Graphics2D)g;
+	    	AffineTransform trans = new AffineTransform();
+	    	trans.setTransform(identity);
+	    	trans.setToTranslation((ship.getPoints()[0].getCoord().getX() - 0.5*img.getWidth()), (ship.getPoints()[0].getCoord().getY() - 0.5*img.getHeight()));
+	    	trans.rotate( -Math.toRadians(ship.getAngle()), 0.5*img.getWidth(), 0.5*img.getHeight() );
+	    	//g2d.drawImage(img, (int)(Math.round(ship.getPoints()[0].getCoord().getX()) - 0.5*img.getWidth()), (int)(Math.round(ship.getPoints()[0].getCoord().getY()) - 0.5*img.getHeight()), null);
+	    	g2d.drawImage(img, trans, this);
 		}
 	}
 }

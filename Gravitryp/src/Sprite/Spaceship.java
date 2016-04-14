@@ -5,7 +5,7 @@ public class Spaceship extends Sprite{
 	private double speed;
 	private double travelangle;
 	private int fuel;
-	private final double rotation = 4;
+	private final double rotation = 3;
 	private final double accel = 0.1;
 	private final double max_speed = 5;
 	
@@ -66,6 +66,9 @@ public class Spaceship extends Sprite{
 		if(this.getSpeed() == 0 || this.getAngle() == this.getTravelangle()) {
 			this.setTravelangle(this.getAngle());
 			this.setSpeed(this.getSpeed() + accel);
+		}
+		else if (Math.abs(this.getAngle() - this.getTravelangle()) < rotation) {
+			this.setTravelangle(this.getAngle());
 		}
 		else {
 			
