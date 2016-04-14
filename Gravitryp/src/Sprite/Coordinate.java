@@ -1,16 +1,16 @@
 package Sprite;
 
-class Coordinate {
-	private int x;
-	private int y;
+public class Coordinate {
+	private double x;
+	private double y;
 	
-	Coordinate(int x, int y) {
+	Coordinate(double x, double y) {
 		setX(x);
 		setY(y);
 	}
-	private void setX(int x){ this.x = x; }
-	private void setY(int y){ this.y = y; }
+	private void setX(double x){ this.x = x; }
+	private void setY(double y){ this.y = y; }
 	
-	int getX(){ return this.x; }
-	int getY(){ return this.y; }
+	public double getX(){ return this.x; }
+	public double getY(){ return this.y; }
 }

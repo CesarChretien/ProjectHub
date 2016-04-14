@@ -16,7 +16,7 @@ public class Point {
 	void setCoord(Coordinate coord) {
 		this.coord = coord;
 	}
-	Coordinate getCoord() {
+	public Coordinate getCoord() {
 		return this.coord;
 	}
 	void setAngle(double angle) {
@@ -31,11 +31,11 @@ public class Point {
 	protected double getAngle() {
 		return this.angle;
 	}
-	int getX() {
-		return (int) Math.round((this.getCoord().getX() + this.getDistance()*Math.cos(this.getAngle() * (Math.PI/180.0))));
+	double getX() {
+		return ((this.getCoord().getX() + this.getDistance()*Math.cos(this.getAngle() * (Math.PI/180.0))));
 	}
-	int getY() {
-		return (int) Math.round((this.getCoord().getY() - this.getDistance()*Math.sin(this.getAngle() * (Math.PI/180.0))));
+	double getY() {
+		return ((this.getCoord().getY() - this.getDistance()*Math.sin(this.getAngle() * (Math.PI/180.0))));
 	}
 	
 }

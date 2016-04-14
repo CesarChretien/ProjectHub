@@ -23,9 +23,6 @@ public class Sprite {
 	}
 	public Sprite(int xloc, int yloc, String shape, int xwidth, int ywidth) {
 		this.setPoints(new Points(new Coordinate(xloc, yloc), shape, xwidth, ywidth));
-		System.out.println(p.getPoints()[0].getX() + ", " + p.getPoints()[0].getY());
-		System.out.println(p.getPoints()[1].getX() + ", " + p.getPoints()[1].getY());
-		System.out.println(p.getPoints()[2].getX() + ", " + p.getPoints()[2].getY());
 		this.setAngle(0);
 	}
 	public Sprite(int xloc, int yloc, int xwidth, int ywidth, double angle) {
@@ -33,7 +30,6 @@ public class Sprite {
 	}
 	public Sprite(int xloc, int yloc, String shape, int xwidth, int ywidth, double angle) {
 		this.setPoints(new Points(new Coordinate(xloc,yloc), shape, xwidth, ywidth));
-		System.out.println(angle);
 		this.setAngle(angle);
 	}
 	
@@ -46,7 +42,7 @@ public class Sprite {
 	public int[] getXlist() {
 		int[] x = new int[this.getPoints().length];
 		for(int i = 0; i < this.getPoints().length; i++) {
-			x[i] = this.getPoints()[i].getX();
+			x[i] = (int) Math.round(this.getPoints()[i].getX());
 		}
 		return x;
 	}
@@ -54,7 +50,7 @@ public class Sprite {
 	public int[] getYlist() {
 		int[] y = new int[this.getPoints().length];
 		for(int i = 0; i < this.getPoints().length; i++) {
-			y[i] = this.getPoints()[i].getY();
+			y[i] = (int) Math.round(this.getPoints()[i].getY());
 		}
 		return y;
 	}

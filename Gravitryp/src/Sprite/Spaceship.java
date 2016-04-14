@@ -40,8 +40,8 @@ public class Spaceship extends Sprite{
 	
 	public void updateLocation() {
 		for(Point points: super.getPoints()) {
-			points.setCoord(new Coordinate((int)(1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())),
-										   (int)(1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle()))));
+			points.setCoord(new Coordinate((1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())),
+										   (1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle()))));
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class Spaceship extends Sprite{
 			points.setAngle((points.getAngle() + 4) % 360);
 		}
 		this.setRealAngle((super.getAngle() + 4) % 360);
-		this.updateLocation();
+		//this.updateLocation();
 	}
 	
 	public void rotateRight() {
@@ -59,7 +59,7 @@ public class Spaceship extends Sprite{
 			points.setAngle((points.getAngle() + 356) % 360);
 		}
 		super.setRealAngle((super.getAngle() + 356) % 360);
-		this.updateLocation();
+		//this.updateLocation();
 	}
 	
 	public void move() {
@@ -90,7 +90,7 @@ public class Spaceship extends Sprite{
 				}
 			}
 		}
-		this.updateLocation();
+		//this.updateLocation();
 	}
 	
 	public void slow() {
