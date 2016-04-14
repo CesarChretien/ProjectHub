@@ -42,6 +42,9 @@ public class Gravitryp extends JFrame implements KeyListener {
     boolean right = false;
     AffineTransform identity = new AffineTransform();
     
+    final int game_width = 800;
+    final int game_height = 600;
+    
 	public Gravitryp () {
 	    Space space = new Space();
 	    this.setTitle("Gravitryp");
@@ -49,7 +52,7 @@ public class Gravitryp extends JFrame implements KeyListener {
 		
 		this.pack();
 		this.setLocation(100, 100);
-		this.setSize(800, 600);
+		this.setSize(game_width, game_height);
 		this.setVisible(true);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,7 +73,7 @@ public class Gravitryp extends JFrame implements KeyListener {
 				if(right) {
 					ship.rotateRight();
 				}
-				ship.updateLocation();
+				ship.updateLocation(this.getWidth(), this.getHeight());
 				this.repaint();
 				Thread.sleep(Math.round(1000.0/FPS));
 			}
@@ -116,13 +119,12 @@ public class Gravitryp extends JFrame implements KeyListener {
 		public void paint(Graphics g) {
 			g.setColor(Color.green);
 	    	g.fillPolygon(ship.getXlist(), ship.getYlist(), ship.getYlist().length);
-	    	//g.drawImage(img, (int)(Math.round(ship.getPoints()[0].getCoord().getX()) - 0.5*img.getWidth()), (int)(Math.round(ship.getPoints()[0].getCoord().getY()) - 0.5*img.getHeight()), null);
+	    	
 	    	Graphics2D g2d = (Graphics2D)g;
 	    	AffineTransform trans = new AffineTransform();
 	    	trans.setTransform(identity);
-	    	trans.setToTranslation((ship.getPoints()[0].getCoord().getX() - 0.5*img.getWidth()), (ship.getPoints()[0].getCoord().getY() - 0.5*img.getHeight()));
+	    	trans.setToTranslation((ship.getXCoord() - 0.5*img.getWidth()), (ship.getYCoord() - 0.5*img.getHeight()));
 	    	trans.rotate( -Math.toRadians(ship.getAngle()), 0.5*img.getWidth(), 0.5*img.getHeight() );
-	    	//g2d.drawImage(img, (int)(Math.round(ship.getPoints()[0].getCoord().getX()) - 0.5*img.getWidth()), (int)(Math.round(ship.getPoints()[0].getCoord().getY()) - 0.5*img.getHeight()), null);
 	    	g2d.drawImage(img, trans, this);
 		}
 	}

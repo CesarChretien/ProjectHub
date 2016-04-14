@@ -55,6 +55,14 @@ public class Sprite {
 		return y;
 	}
 	
+	public double getXCoord() {
+		return this.getPoints()[0].getCoord().getX();
+	}
+	
+	public double getYCoord() {
+		return this.getPoints()[0].getCoord().getY();
+	}
+	
 
 	private void setAngle(double angle) { 
 		for(Point points: this.getPoints()) {

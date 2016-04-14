@@ -6,6 +6,7 @@ public class Spaceship extends Sprite{
 	private double travelangle;
 	private int fuel;
 	private final double rotation = 3;
+	private final double turnspeed = 4;
 	private final double accel = 0.1;
 	private final double max_speed = 5;
 	
@@ -44,21 +45,27 @@ public class Spaceship extends Sprite{
 										   (1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle()))));
 		}
 	}
+	public void updateLocation(int x, int y) {
+		for(Point points: super.getPoints()) {
+			points.setCoord(new Coordinate(((1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())) + 1.0*x) % x ,
+										   ((1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle())) + 1.0*y) % y));
+		}
+	}
 	
 	//movement
 	public void rotateLeft() {
 		for(Point points: super.getPoints()) {
-			points.setAngle((points.getAngle() + 4) % 360);
+			points.setAngle((points.getAngle() + turnspeed) % 360);
 		}
-		this.setRealAngle((super.getAngle() + 4) % 360);
+		this.setRealAngle((super.getAngle() + turnspeed) % 360);
 		//this.updateLocation();
 	}
 	
 	public void rotateRight() {
 		for(Point points: super.getPoints()) {
-			points.setAngle((points.getAngle() + 356) % 360);
+			points.setAngle((points.getAngle() + (360 - turnspeed)) % 360);
 		}
-		super.setRealAngle((super.getAngle() + 356) % 360);
+		super.setRealAngle((super.getAngle() + (360 - turnspeed)) % 360);
 		//this.updateLocation();
 	}
 	
