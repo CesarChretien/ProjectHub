@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Sprite.Planet;
 import Sprite.Spaceship;
 import Sprite.Sprite;
 
@@ -34,6 +35,8 @@ public class Gravitryp extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;
 	//Spaceship(xloc, yloc, SHAPE, xwidth, ywidth, angle, fuel, travelangle)
     Spaceship ship = new Spaceship(300, 300, Sprite.TRIANGLE, img.getWidth(), img.getHeight(), 0, 100, 0);
+    Planet earth = new Planet(600, 300, 50, 50, 200);
+    Planet[] planets = {earth};
     boolean game_runs = false;
     int FPS = 60;
     boolean up = false;
@@ -73,7 +76,7 @@ public class Gravitryp extends JFrame implements KeyListener {
 				if(right) {
 					ship.rotateRight();
 				}
-				ship.updateLocation(this.getWidth(), this.getHeight());
+				ship.updateLocation(this.getWidth(), this.getHeight(), planets);
 				this.repaint();
 				Thread.sleep(Math.round(1000.0/FPS));
 			}
@@ -119,6 +122,7 @@ public class Gravitryp extends JFrame implements KeyListener {
 		public void paint(Graphics g) {
 			g.setColor(Color.green);
 	    	g.fillPolygon(ship.getXlist(), ship.getYlist(), ship.getYlist().length);
+	    	g.fillOval((int)Math.round(earth.getXCoord() - earth.getRadius()), (int)Math.round(earth.getYCoord() - earth.getRadius()), (int)Math.round(2*earth.getRadius()), (int)Math.round(2*earth.getRadius()));
 	    	
 	    	Graphics2D g2d = (Graphics2D)g;
 	    	AffineTransform trans = new AffineTransform();

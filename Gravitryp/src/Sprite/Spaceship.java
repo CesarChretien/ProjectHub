@@ -39,17 +39,45 @@ public class Spaceship extends Sprite{
 		setTravelangle(travelangle);
 	}
 	
+	public double applyXGravity(Planet[] planet) {
+		double res = 0.0;
+		for(Planet p: planet) {
+			double xdiff = p.getXCoord() - this.getXCoord();
+			double ydiff = p.getYCoord() - this.getYCoord();
+			double dsq = Math.pow(xdiff, 2) +  Math.pow(ydiff,2);
+			res += (dsq != 0.0) ? p.getMass()*xdiff/dsq : 0.0; 
+		}
+		return 1.0*res;
+	}
+	
+	public double applyYGravity(Planet[] planet) {
+		double res = 0.0;
+		for(Planet p: planet) {
+			double xdiff = p.getXCoord() - this.getXCoord();
+			double ydiff = p.getYCoord() - this.getYCoord();
+			double dsq = Math.pow(xdiff, 2) +  Math.pow(ydiff,2);
+			res += (dsq != 0.0) ? p.getMass()*ydiff/dsq : 0.0; 
+		}
+		return 1.0*res;
+	}
+	
 	public void updateLocation() {
 		for(Point points: super.getPoints()) {
 			points.setCoord(new Coordinate((1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())),
 										   (1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle()))));
 		}
 	}
-	public void updateLocation(int x, int y) {
+	public void updateLocation(int x, int y, Planet[] planet) {
+		Coordinate old = new Coordinate(this.getXCoord(), this.getYCoord());
 		for(Point points: super.getPoints()) {
-			points.setCoord(new Coordinate(((1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())) + 1.0*x) % x ,
-										   ((1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle())) + 1.0*y) % y));
+		points.setCoord(new Coordinate(((1.0*points.getCoord().getX() + this.getSpeed()*Math.cos((Math.PI/180)*this.getTravelangle())) + 1.0*x + applyXGravity(planet)) % x ,
+									   ((1.0*points.getCoord().getY() - this.getSpeed()*Math.sin((Math.PI/180)*this.getTravelangle())) + 1.0*y + applyYGravity(planet)) % y));
 		}
+		Coordinate n = new Coordinate(this.getXCoord(), this.getYCoord());
+		
+		if(Math.abs(n.getY() - old.getY()) < 50 && Math.abs(n.getX() - old.getX()) < 50)
+			this.setTravelangle(1.0*Math.round((360.0 - (180.0/Math.PI)*Math.atan2(n.getY() - old.getY(), n.getX() - old.getX()))%360));
+		System.out.println("reishoek: " + this.getTravelangle() + ", hoek: " + this.getAngle() + ", speed: " + getSpeed());
 	}
 	
 	//movement

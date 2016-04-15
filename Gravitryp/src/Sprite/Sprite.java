@@ -75,6 +75,7 @@ public class Sprite {
 	
 	//getters
 	public Point[] getPoints(){ return this.p.getPoints(); }
+	public Points getPointsObj() { return this.p; }
 	public double getAngle(){ return this.angle; }
 	public String getShape(){ return this.shape; }
 }
