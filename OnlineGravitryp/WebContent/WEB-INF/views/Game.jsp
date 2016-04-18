@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +12,25 @@
 	display:none;
 }
 </style>
+<script src="resources/Point.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+
+var test = ${ship.getHitbox()[0].getX()};
+
+var schip = {
+		x: ${ship.getHitbox()[0].getX()},
+		y: ${ship.getHitbox()[0].getY()},
+		xplusy : function(){
+			return this.x + this.y;
+		}
+		
+};
+</script>
 
 </head>
 
 <body>
-
-<% int i = 5; %>
-<p>Java getal: <%= i %></p>
 
 <img id="ship" width="200" height="200" src="<c:url value="/resources/SpaceShipStill.png"/>">
 <canvas id="myCanvas" width="800" height="600"
@@ -27,9 +38,11 @@ style="border:1px solid #000000;">
 </canvas>
 
 <script>
+
+	
+
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
-	
 	var grd=ctx.createRadialGradient(265,240,2,280,240,100);
 	grd.addColorStop(0,"red");
 	grd.addColorStop(1,"white");
@@ -47,6 +60,7 @@ style="border:1px solid #000000;">
 	ctx.font = "30px Arial";
 	ctx.fillStyle = "blue";
 	ctx.fillText("Hello World",200,50);
+	ctx.fillText(test,500,50);
 	
 	window.onload = function() {
 	    var img = document.getElementById("ship");
