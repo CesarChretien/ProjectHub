@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,12 @@
 </style>
 
 </head>
+
 <body>
+
+<% int i = 5; %>
+<p>Java getal: <%= i %></p>
+
 <img id="ship" width="200" height="200" src="<c:url value="/resources/SpaceShipStill.png"/>">
 <canvas id="myCanvas" width="800" height="600"
 style="border:1px solid #000000;">

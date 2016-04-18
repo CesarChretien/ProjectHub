@@ -21,6 +21,7 @@
 	</c:if> --%>
 
 	<p>Hint: <span id="hint"></span></p>
+	<p>Aantal pogingen: <span id="poging">0</span></p>
 
 	<form method="post">
 		<label for="guess">Guess: </label><input type="text" name="guess" id="guess">
@@ -33,7 +34,12 @@
 		var root_url = '<c:url value="/" />';
 		
 		function tryGuess() {
+			if($('#hint').text() == "Correct!") {
+				$('#poging').text("0");
+			}
 			var guess = $('#guess').val();
+			var poging = parseInt($('#poging').text());
+			$('#poging').text(++poging);
 			var url = root_url + "try";
 			$.get(url, {guess: guess}, function(data) {
 				$('#hint').text(data).show();
@@ -43,6 +49,14 @@
 		$(document).ready(function(){
 			$('#guess_btn').click(tryGuess);
 		});
+		
+		/*function Point(x, y){
+			this.x = x;
+			this.y = y;
+			this.getX = function(){ return this.x; }
+		}*/
+		
+		var p = new Point(5,10);
 	
 	</script>
 	

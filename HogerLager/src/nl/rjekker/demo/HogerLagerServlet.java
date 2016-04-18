@@ -63,8 +63,13 @@ public class HogerLagerServlet {
 		if(gs == null) {
 			System.out.println("Hallo.");
 			gs = new GameState();
+		} 
+		else if(gs.isSecret(guess)) {
+			System.out.println("Ik kom hier voorbij.");
+			gs = null;
+			return "Correct!";
 		}
-		return (gs.isSecret(guess)) ? "Correct!" : ((gs.getSecret() > guess) ? "Hoger!" : "Lager!");
+		return (gs.getSecret() > guess) ? "Hoger!" : "Lager!";
 	}
 	
 	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
