@@ -8,18 +8,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 /**
  * Servlet implementation class HogerLagerServlet
  */
-@WebServlet("/index.html")
-public class HogerLagerServlet extends HttpServlet {
+
+//@WebServlet("/index.html")
+
+@Controller
+public class HogerLagerServlet {
 	
 	public static final String GAMESTATE = "gamestate";
 	public static final String ERROR = "error";
 	public static final String GAME_JSP = "/WEB-INF/game.jsp";
 	public static final String SUCCESS_JSP = "/WEB-INF/success.jsp";
 	
-	private GameState getGameState(HttpServletRequest r){
+	public GameState gs = null;
+	
+	/*private GameState getGameState(HttpServletRequest r){
 		return (GameState)r.getSession().getAttribute(GAMESTATE);
 	}
 	
@@ -30,7 +40,7 @@ public class HogerLagerServlet extends HttpServlet {
 	/** 
 	 * Returns null if no guess in req. params; -1 if not a valid guess
 	 * If everything ok: return guess */
-	private Integer getGuess(HttpServletRequest req){
+	/*private Integer getGuess(HttpServletRequest req){
 		String input = req.getParameter("guess");
 		if(input == null || input.isEmpty()){
 			return null;
@@ -45,9 +55,19 @@ public class HogerLagerServlet extends HttpServlet {
 		catch(NumberFormatException e){
 			return -1;
 		}
+	}*/
+	
+	@RequestMapping("/try")
+	protected @ResponseBody String tryGuess (@RequestParam int guess) {
+		System.out.println("Hoi.");
+		if(gs == null) {
+			System.out.println("Hallo.");
+			gs = new GameState();
+		}
+		return (gs.isSecret(guess)) ? "Correct!" : ((gs.getSecret() > guess) ? "Hoger!" : "Lager!");
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(getGameState(request) == null){
 			makeGameState(request);
 		}
@@ -82,6 +102,8 @@ public class HogerLagerServlet extends HttpServlet {
 
 		request.setAttribute("error", error);
 		request.getRequestDispatcher(GAME_JSP).forward(request, response);
-	}
+	}*/
+	
+	
 
 }

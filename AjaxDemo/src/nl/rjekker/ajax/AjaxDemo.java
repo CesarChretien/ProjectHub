@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AjaxDemo {
 
 	@RequestMapping(value="/plus")
-	public @ResponseBody Integer plus(@RequestParam int a, @RequestParam int b,
-			HttpSession session){
+	public @ResponseBody Integer plus(@RequestParam int a, @RequestParam int b, HttpSession session){
 		List<Integer> history = (List<Integer>)session.getAttribute("history");
 		if(history == null){
 			history = new ArrayList<>();

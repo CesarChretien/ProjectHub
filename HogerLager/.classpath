@@ -13,5 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/Student/Documents/ProjectHub/AjaxDemo/WebContent/WEB-INF/lib/spring-context-4.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Student/Documents/ProjectHub/AjaxDemo/WebContent/WEB-INF/lib/spring-web-4.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Student/Documents/ProjectHub/OnlineGravitryp/WebContent/WEB-INF/lib/spring-web-4.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Student/Documents/ProjectHub/spring_mvc_showcase/WebContent/WEB-INF/lib/spring-web-4.2.2.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
