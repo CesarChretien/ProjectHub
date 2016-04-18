@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+.error {
+	color: red;
+}
+
+.hint {
+	color: blue;
+}
