@@ -1,7 +1,7 @@
 /**
  * 
  */
-function p (centre, shape, xwidth, ywidth, shipdir, velocity) {
+function Ship(centre, shape, xwidth, ywidth, shipdir, velocity) {
 	
 	this.maxspd = 5.0;
 	this.rotspd = 4.0;
@@ -10,24 +10,24 @@ function p (centre, shape, xwidth, ywidth, shipdir, velocity) {
 	this.velocity = velocity;
 	
 	this.rotateLeft = function() {
-		this.direction.rotate(-this.rotspd);
-		this.sprite.hitbox(sprite.centre, sprite.direction);
+		this.sprite.direction.rotate0(-this.rotspd);
+		this.sprite.setHitbox(this.sprite.centre, this.sprite.direction);
 	}
 	
 	this.rotateRight = function() {
-		this.direction.rotate(this.rotspd);
-		this.sprite.hitbox(sprite.centre, sprite.direction);
+		this.sprite.direction.rotate0(this.rotspd);
+		this.sprite.setHitbox(this.sprite.centre, this.sprite.direction);
 	}
 	
 	this.setVelocity = function(v) {
-		if(p.length() > this.maxspd) {
+		if(v.length() > this.maxspd) {
 			v = new Point(v.x * (this.maxspd/v.length()), v.y * (this.maxspd/v.length()));
 		}
 		this.velocity = v;
 	}
 	
 	this.move = function() {
-		var update = new Point(sprite.direction.x, sprite.direction.y);
+		var update = new Point(this.sprite.direction.x, this.sprite.direction.y);
 		update.scale(this.accel);
 		this.setVelocity(new Point(this.velocity.x + update.x, this.velocity.y + update.y));
 	}
@@ -54,5 +54,11 @@ function p (centre, shape, xwidth, ywidth, shipdir, velocity) {
 		}
 		
 		this.setVelocity(new Point(this.velocity.x + g_xsum, this.velocity.y + g_ysum));
+	}
+	
+	this.update = function() {
+		this.sprite.centre.x += this.velocity.x;
+		this.sprite.centre.y += this.velocity.y;
+		this.sprite.setHitbox(this.sprite.centre, this.sprite.direction);
 	}
 }
