@@ -34,8 +34,13 @@ this.drawship = function(ship) {
 		this.stroke();
 	}
 	this.closePath();
-	
-	
+}
+
+this.drawplanet = function(planet) {
+	this.beginPath();
+	this.arc(planet.sprite.centre.x, planet.sprite.centre.y, planet.radius, 0, 2*Math.PI);
+	this.stroke();
+	this.closePath();
 }
 
 </script>
@@ -52,6 +57,11 @@ this.drawship = function(ship) {
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
+	var planet = new Planet(new Point(600, 200), 50, 2);
+	
+	ctx.dp = drawplanet;
+	ctx.dp(planet);
+	
 	ctx.ds = drawship;
 	ctx.ds(ship);	
 	
@@ -99,8 +109,9 @@ this.drawship = function(ship) {
 		if(up) {
 			ship.move();
 		}
-		
+		ship.applyGravity([planet]);
 		ship.update($('#myCanvas').width(), $('#myCanvas').height());
+		ctx.dp(planet);
 		ctx.ds(ship);
 		
 		window.requestAnimationFrame(updateShip);

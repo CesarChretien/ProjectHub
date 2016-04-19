@@ -45,12 +45,12 @@ function Ship(centre, shape, xwidth, ywidth, shipdir, velocity) {
 		var g_xsum = 0;
 		var g_ysum = 0;
 		
-		for(var i = 0; i < planets.arguments; i++) {
-			var dx = planets[i].sprite.centre.x - this.centre.x;
-			var dy = planets[i].sprite.centre.y - this.centre.y;
+		for(var i = 0; i < planets.length; i++) {
+			var dx = planets[i].sprite.centre.x - this.sprite.centre.x;
+			var dy = planets[i].sprite.centre.y - this.sprite.centre.y;
 			var distsq = dx*dx + dy*dy;
-			g_xsum += planets.gc * (dx / distsq);
-			g_ysum += planets.gc * (dy / distsq);
+			g_xsum += planets[i].gc * (dx / distsq);
+			g_ysum += planets[i].gc * (dy / distsq);
 		}
 		
 		this.setVelocity(new Point(this.velocity.x + g_xsum, this.velocity.y + g_ysum));
