@@ -45,18 +45,15 @@ this.drawship = function(ship) {
 <body>
 
 <img id="ship" width="200" height="200" src="<c:url value="/resources/SpaceShipStill.png"/>">
-<canvas id="myCanvas" width="800" height="600"
-style="border:1px solid #000000;">
+<canvas id="myCanvas" width=1280 height=720 style="border:1px solid #000000;">
 </canvas>
 
 <script>
-	
-	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
-	
+	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
 	ctx.ds = drawship;
-	ctx.ds(ship);
+	ctx.ds(ship);	
 	
 	$(document).keydown( function(event) {
 		if(event.which == 37) {
@@ -89,7 +86,7 @@ style="border:1px solid #000000;">
 	});
 	
 	function updateShip() {
-		ctx.clearRect(0, 0, 800, 600);
+		ctx.clearRect(0, 0, 1280, 720);
 		if(left) {
 			ship.rotateLeft();
 		}
@@ -110,12 +107,9 @@ style="border:1px solid #000000;">
 	}
 	updateShip();
 	
-	//window.onload = function() {
-	//    var img = document.getElementById("ship");
-	//	ctx.drawImage(img, 10, 400);
-		//websockets
-	//};
-	
+	window.onload = function() {
+		
+	}
 </script>
 
 </body>
