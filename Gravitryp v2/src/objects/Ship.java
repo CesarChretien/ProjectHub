@@ -15,17 +15,13 @@ public class Ship extends Sprite {
 	//rotates the ship to the left
 	public void rotateLeft() {
 		this.getDirection().rotate(-rotspd);
-		for(Point p: this.getHitbox()) {
-			p.rotate(this.getCentre(), -rotspd);
-		}
+		this.setHitbox(this.getCentre(), this.getDirection());
 	}
 	
 	//rotates the ship to the right
 	public void rotateRight() {
 		this.getDirection().rotate(rotspd);
-		for(Point p: this.getHitbox()) {
-			p.rotate(this.getCentre(), rotspd);
-		}
+		this.setHitbox(this.getCentre(), this.getDirection());
 	}
 	
 	//updates velocity vector

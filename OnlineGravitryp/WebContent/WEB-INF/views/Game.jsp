@@ -13,19 +13,15 @@
 }
 </style>
 <script src="resources/Point.js"></script>
+<script src="resources/Sprite.js"></script>
+<script src="resources/Planet.js"></script>
+<script src="resources/Ship.js"></script>
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 
 var test = ${ship.getHitbox()[0].getX()};
 
-var schip = {
-		x: ${ship.getHitbox()[0].getX()},
-		y: ${ship.getHitbox()[0].getY()},
-		xplusy : function(){
-			return this.x + this.y;
-		}
-		
-};
 </script>
 
 </head>
