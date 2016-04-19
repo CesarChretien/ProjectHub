@@ -20,15 +20,22 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
 
-var test = ${ship.getHitbox()[0].getX()};
+var left = false;
+var right = false;
+var up = false;
+var down = false;
 
 this.drawship = function(ship) {
 	var h = ship.sprite.hitbox;
+	this.beginPath();
 	for(var i = 0; i < h.length; i++) {
 		this.moveTo(h[i].x, h[i].y);
 		this.lineTo(h[(i+1)%h.length].x, h[(i+1)%h.length].y);
 		this.stroke();
 	}
+	this.closePath();
+	
+	
 }
 
 </script>
@@ -43,51 +50,71 @@ style="border:1px solid #000000;">
 </canvas>
 
 <script>
-
 	
 	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
-	var grd=ctx.createRadialGradient(265,240,2,280,240,100);
-	grd.addColorStop(0,"red");
-	grd.addColorStop(1,"white");
-	ctx.fillStyle = grd;
-	ctx.fillRect(200,200,150,80);
 	
 	ctx.ds = drawship;
 	ctx.ds(ship);
 	
-	ctx.beginPath();
-	ctx.arc(95,50,40,0,2*Math.PI);
-	ctx.stroke();
-	
-	ctx.font = "30px Arial";
-	ctx.fillStyle = "blue";
-	ctx.fillText("Hello World",200,50);
-	ctx.fillText(test,500,50);
-	
 	$(document).keydown( function(event) {
 		if(event.which == 37) {
-			ship.rotateLeft();
+			left = true;
 		}
 		if(event.which == 39) {
-			ship.rotateRight();
+			right = true;
 		}
 		if(event.which == 40) {
-			ship.slow();
+			down = true;
 		}
 		if(event.which == 38) {
-			ship.move();
+			up = true;
 		}
-		ship.update();
-		ctx.ds(ship);
 	});
 	
-	window.onload = function() {
-	    var img = document.getElementById("ship");
-		ctx.drawImage(img, 10, 400);
+	$(document).keyup( function(event) {
+		if(event.which == 37) {
+			left = false;
+		}
+		if(event.which == 39) {
+			right = false;
+		}
+		if(event.which == 40) {
+			down = false;
+		}
+		if(event.which == 38) {
+			up = false;
+		}
+	});
+	
+	function updateShip() {
+		ctx.clearRect(0, 0, 800, 600);
+		if(left) {
+			ship.rotateLeft();
+		}
+		if(right) {
+			ship.rotateRight();
+		}
+		if(down) {
+			ship.slow();
+		}
+		if(up) {
+			ship.move();
+		}
+		
+		ship.update($('#myCanvas').width(), $('#myCanvas').height());
+		ctx.ds(ship);
+		
+		window.requestAnimationFrame(updateShip);
+	}
+	updateShip();
+	
+	//window.onload = function() {
+	//    var img = document.getElementById("ship");
+	//	ctx.drawImage(img, 10, 400);
 		//websockets
-	};
+	//};
 	
 </script>
 

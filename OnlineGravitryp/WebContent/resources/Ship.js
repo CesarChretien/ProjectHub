@@ -33,7 +33,7 @@ function Ship(centre, shape, xwidth, ywidth, shipdir, velocity) {
 	}
 	
 	this.slow = function() {
-		if(this.velocity > this.accel) {
+		if(this.velocity.length() > this.accel) {
 			this.velocity.scale(1 - this.accel);
 		}
 		else {
@@ -56,9 +56,9 @@ function Ship(centre, shape, xwidth, ywidth, shipdir, velocity) {
 		this.setVelocity(new Point(this.velocity.x + g_xsum, this.velocity.y + g_ysum));
 	}
 	
-	this.update = function() {
-		this.sprite.centre.x += this.velocity.x;
-		this.sprite.centre.y += this.velocity.y;
+	this.update = function(width, height) {
+		this.sprite.centre.x = (this.sprite.centre.x + this.velocity.x + width) % width;
+		this.sprite.centre.y = (this.sprite.centre.y + this.velocity.y + height) % height;
 		this.sprite.setHitbox(this.sprite.centre, this.sprite.direction);
 	}
 }
