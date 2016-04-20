@@ -100,9 +100,10 @@ $(document).keyup( function(event) {
 <canvas id="myCanvas" width=1280 height=720 style="border:1px solid #000000;"></canvas>
 <form:form id="endgame" action="/OnlineGravitryp/Highscores" method="post">
 Name: <br>
-<input type="text" id="name"> <br>
+<input type="text" name="name"> <br>
 Highscore: <br>
-<input type="text" id="highscore">
+<input type="text" name="score">
+<input type="submit">
 </form:form>
 
 <script>
@@ -119,14 +120,11 @@ Highscore: <br>
 	
 	function updateGame() {
 		ctx.clearRect(0, 0, 1280, 720);
-		if(gameover) {
-			//$.post("/OnlineGravitryp/Highscores", {}, function(){});
-			//return;
-		}
 		
 		if(pause) {
-			$('#highscore').val(score);
+			$('input[name=score]').val(score);
 			$('#endgame').submit();
+			return;
 		}
 		
 		if(!pause) {

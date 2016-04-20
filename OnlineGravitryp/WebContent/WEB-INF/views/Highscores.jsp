@@ -7,6 +7,8 @@
 <title>Highscore pagina!</title>
 </head>
 <body>
-Placeholder text.
+Je hebt ${highscore.score} punten gehaald.</br>
+Lijst van highscores: <br>
+${list}.
 </body>
 </html>
