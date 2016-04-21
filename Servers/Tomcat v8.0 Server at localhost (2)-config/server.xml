@@ -124,7 +124,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="OnlineGravitryp" path="/OnlineGravitryp" reloadable="true" source="org.eclipse.jst.jee.server:OnlineGravitryp"/></Host>
+      <Context docBase="spring_mvc_minimal" path="/spring_mvc_minimal" reloadable="true" source="org.eclipse.jst.jee.server:spring_mvc_minimal"/><Context docBase="spring_mvc_showcase" path="/spring_mvc_showcase" reloadable="true" source="org.eclipse.jst.jee.server:spring_mvc_showcase"/><Context docBase="ServletDing" path="/ServletDing" reloadable="true" source="org.eclipse.jst.jee.server:ServletDing"/><Context docBase="AjaxDemo" path="/AjaxDemo" reloadable="true" source="org.eclipse.jst.jee.server:AjaxDemo"/><Context docBase="HogerLager" path="/HogerLager" reloadable="true" source="org.eclipse.jst.jee.server:HogerLager"/><Context docBase="VingerOefeningen" path="/VingerOefeningen" reloadable="true" source="org.eclipse.jst.jee.server:VingerOefeningen"/><Context docBase="OnlineGravitryp" path="/OnlineGravitryp" reloadable="true" source="org.eclipse.jst.jee.server:OnlineGravitryp"/></Host>
     </Engine>
   </Service>
 </Server>

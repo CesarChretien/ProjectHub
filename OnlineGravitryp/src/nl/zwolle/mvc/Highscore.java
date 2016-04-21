@@ -35,4 +35,9 @@ public class Highscore {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	@Override
+	public String toString(){
+		return "Naam: " + this.getName() + ", score: " + this.getScore();
+	}
 }
