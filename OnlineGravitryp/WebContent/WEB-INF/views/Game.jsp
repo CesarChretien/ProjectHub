@@ -20,7 +20,7 @@
 <script>
 
 //configureer JQuery om csrf-token mee te sturen
- var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 var csrfToken = $("meta[name='_csrf']").attr("content");
 $(function () {
@@ -115,9 +115,6 @@ $(document).keyup( function(event) {
 
 <canvas id="myCanvas" width=1280 height=720 style="border:1px solid #000000;"></canvas>
 <form:form id="endgame" action="/OnlineGravitryp/Highscores" method="post">
-Name: <br>
-<input type="text" name="name"> <br>
-Highscore: <br>
 <input type="text" name="score">
 <input type="submit">
 </form:form>

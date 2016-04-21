@@ -14,11 +14,8 @@ public class SimpleController {
 	public void form(Model model) {	}
 
 	@RequestMapping(value="/Highscores", method=RequestMethod.POST) 
-	public void setScore(Highscore score, Model model, HttpServletRequest request) {
+	public void setScore(int score, Model model, HttpServletRequest request) {
 		System.out.println("Ik kom hierlangs.");
-		HighscoreDao.add(score);
-		model.addAttribute("highscore", score);
-		model.addAttribute("list", HighscoreDao.all());
-		request.getSession().invalidate();
+		model.addAttribute("score", score);
 	}
 }
