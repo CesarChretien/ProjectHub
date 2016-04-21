@@ -12,6 +12,7 @@
 
 <script src="resources/Point.js"></script>
 <script src="resources/Sprite.js"></script>
+<script src="resources/Collision.js"></script>
 <script src="resources/Planet.js"></script>
 <script src="resources/Ship.js"></script>
 
@@ -19,7 +20,7 @@
 <script>
 
 //configureer JQuery om csrf-token mee te sturen
- var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 var csrfToken = $("meta[name='_csrf']").attr("content");
 $(function () {
@@ -36,6 +37,7 @@ var up = false;
 var down = false;
 var pause = false;
 var gameover = false;
+var collision = false;
 var score = 0;
 
 this.drawship = function(ship) {
@@ -46,6 +48,7 @@ this.drawship = function(ship) {
 		this.lineTo(h[(i+1)%h.length].x, h[(i+1)%h.length].y);
 		this.stroke();
 	}
+	this.strokeStyle = "white";
 	this.closePath();
 }
 
@@ -53,6 +56,7 @@ this.drawplanet = function(planet) {
 	this.beginPath();
 	this.arc(planet.sprite.centre.x, planet.sprite.centre.y, planet.radius, 0, 2*Math.PI);
 	this.stroke();
+	this.strokeStyle = "white";
 	this.closePath();
 }
 
@@ -93,15 +97,24 @@ $(document).keyup( function(event) {
 });
 </script>
 
+<style>
+
+#endgame {
+	display: none;
+}
+
+#myCanvas {
+	background: url("resources/outer-space-wallpaper-pictures.jpg")
+}
+
+</style>
+
 </head>
 
 <body>
 
 <canvas id="myCanvas" width=1280 height=720 style="border:1px solid #000000;"></canvas>
 <form:form id="endgame" action="/OnlineGravitryp/Highscores" method="post">
-Name: <br>
-<input type="text" name="name"> <br>
-Highscore: <br>
 <input type="text" name="score">
 <input type="submit">
 </form:form>
@@ -110,6 +123,7 @@ Highscore: <br>
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
+	ship.col = hasCollisionWith;
 	var planet = new Planet(new Point(600, 200), 50, 3);
 	
 	ctx.dp = drawplanet;
@@ -118,15 +132,19 @@ Highscore: <br>
 	ctx.ds = drawship;
 	ctx.ds(ship);	
 	
+	ctx.fillStyle = "white";
 	function updateGame() {
 		ctx.clearRect(0, 0, 1280, 720);
 		
-		if(pause) {
+		//checks for collision
+		collision = ship.col([planet]);
+		if(collision) {
 			$('input[name=score]').val(score);
 			$('#endgame').submit();
 			return;
 		}
 		
+		//if unpaused game will flow
 		if(!pause) {
 			if(left) {
 				ship.rotateLeft();
