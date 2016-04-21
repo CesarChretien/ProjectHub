@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SimpleController {
 
 	@RequestMapping(value="/Game", method=RequestMethod.GET)
-	public void form(Model model) {	}
+	public void form(HttpServletRequest request) {	
+		System.out.println("Cookie: " + request.getSession().toString());
+	}
 
 	@RequestMapping(value="/Highscores", method=RequestMethod.POST) 
 	public void setScore(int score, Model model, HttpServletRequest request) {
