@@ -25,7 +25,7 @@ $(function () {
 });
 
 function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
+	var element = $('<li>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord!' +
 					'</li>');
 	$('ul').append(element);
 }
@@ -51,7 +51,7 @@ function add() {
 }
 
 function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + 'heeft ' + highscore.score + ' punten gescoord!' +
+	var element = $('<li>Naam: ' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
 					'</li>');
 	$('ul').append(element);
 }
