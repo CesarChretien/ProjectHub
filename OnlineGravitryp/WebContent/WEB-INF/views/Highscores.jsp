@@ -25,15 +25,26 @@ $(function () {
 });
 
 function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord!' +
-					'</li>');
+	var element = $('<li> <b>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord! abra' +
+					'</b> </li>');
+	$('ul').append(element);
+}
+
+function add_own_score_to_list(highscore){
+	var element = $('<li><b>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord! kadabra' +
+					'</b></li>');
 	$('ul').append(element);
 }
 	
-function get_scores(){
+function get_scores(highscore){
 	$.get("/OnlineGravitryp/Highscores/", function(data){
 		for(var i=0; i < data.length; ++i){
-			add_score_to_list(data[i]);
+			if(highscore.name === data[i].name && highscore.score === data[i].score) {
+				add_own_score_to_list(data[i]);
+			}
+			else {
+				add_score_to_list(data[i]);
+			}
 		}
 	});
 }
@@ -45,8 +56,13 @@ function add() {
 		score: ${score},
 	};
 	$.post("/OnlineGravitryp/Highscores/Verstuur", highscore, function(data){
-		get_scores();
-		$('#lijst').show();
+		if(data) {
+			get_scores(highscore);
+			$('#lijst').show();
+		}
+		else {
+			window.location.replace("/OnlineGravitryp/Game");
+		}
 	});
 }
 

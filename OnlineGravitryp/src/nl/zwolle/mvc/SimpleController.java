@@ -12,12 +12,11 @@ public class SimpleController {
 
 	@RequestMapping(value="/Game", method=RequestMethod.GET)
 	public void form(HttpServletRequest request) {	
-		System.out.println("Cookie: " + request.getSession().toString());
+		//nothing happens
 	}
 
 	@RequestMapping(value="/Highscores", method=RequestMethod.POST) 
 	public void setScore(int score, Model model, HttpServletRequest request) {
-		System.out.println("Ik kom hierlangs.");
 		model.addAttribute("score", score);
 	}
 }
