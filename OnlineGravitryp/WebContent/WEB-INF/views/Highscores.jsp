@@ -25,15 +25,26 @@ $(function () {
 });
 
 function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord!' +
-					'</li>');
-	$('ul').append(element);
+	var element = $('<li>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
+					'</b> </li>');
+	$('ol').append(element);
+}
+
+function add_own_score_to_list(highscore){
+	var element = $('<li><b>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
+					'</b></li>');
+	$('ol').append(element);
 }
 	
-function get_scores(){
+function get_scores(highscore){
 	$.get("/OnlineGravitryp/Highscores/", function(data){
 		for(var i=0; i < data.length; ++i){
-			add_score_to_list(data[i]);
+			if(highscore.name === data[i].name && highscore.score === data[i].score) {
+				add_own_score_to_list(data[i]);
+			}
+			else {
+				add_score_to_list(data[i]);
+			}
 		}
 	});
 }
@@ -45,28 +56,19 @@ function add() {
 		score: ${score},
 	};
 	$.post("/OnlineGravitryp/Highscores/Verstuur", highscore, function(data){
-		get_scores();
-		$('#lijst').show();
-	});
-}
-
-function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
-					'</li>');
-	$('ul').append(element);
-}
-	
-function get_scores(){
-	$.get("/OnlineGravitryp/Highscores/", function(data){
-		for(var i=0; i < data.length; ++i){
-			add_score_to_list(data[i]);
+		if(data) {
+			get_scores(highscore);
+			$('#lijst').show();
+		}
+		else {
+			window.location.replace("/OnlineGravitryp/Game");
 		}
 	});
 }
 
 $(document).ready(function() {
 	$('input[type=submit]').click(add);
-})	
+})
 </script>
 		
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -78,7 +80,7 @@ Voer hier je naam in: <br>
 <input type="text" id="name">
 <input type="submit" value="Verstuur">
 <div id="lijst" hidden=true>Toegevoegd! Lijst van highscores: <br>
-<ul></ul></div>
+<ol></ol></div>
 
 <!-- <ul>
 	<c:forEach var="listValue" items="${list}">

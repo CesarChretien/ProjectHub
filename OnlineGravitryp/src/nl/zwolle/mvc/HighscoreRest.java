@@ -1,9 +1,11 @@
 package nl.zwolle.mvc;
 
+import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,16 +13,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Highscores/")
 public class HighscoreRest {
-
+	
+	private boolean death = false;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<Highscore> highscores() {
-		return HighscoreDao.all();
+		List<Highscore> hsl = HighscoreDao.all();
+		Collections.sort(hsl, new Highscore());
+		return hsl;
+	}
+	
+	@RequestMapping(value = "Check", method=RequestMethod.GET)
+	public void death(boolean collision) {
+		death = collision;
 	}
 	
 	@RequestMapping(value="Verstuur", method=RequestMethod.POST)
-	public void add(Highscore score, HttpServletRequest request) {
-		System.out.println("En hier kom ik ook langs!");
-		HighscoreDao.add(score);
-		request.getSession(false).invalidate();
+	public boolean add(Highscore score, Model model, HttpSession session) {
+		if(death) {
+			HighscoreDao.add(score);
+			death = false;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

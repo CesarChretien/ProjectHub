@@ -1,5 +1,7 @@
 package nl.zwolle.mvc;
 
+import java.util.Comparator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Highscore {
+public class Highscore implements Comparator<Highscore>{
 
 	private Long id;
 	@Id
@@ -39,5 +41,10 @@ public class Highscore {
 	@Override
 	public String toString(){
 		return "Naam: " + this.getName() + ", score: " + this.getScore();
+	}
+	
+	@Override
+	public int compare(Highscore h1, Highscore h2) {
+		return h2.getScore() - h1.getScore();
 	}
 }

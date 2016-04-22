@@ -31,7 +31,7 @@ function hasCollisionWith(objlist) {
 					return true;
 				}
 			}
-			return false;
 		}
 	}
+	return false;
 }
