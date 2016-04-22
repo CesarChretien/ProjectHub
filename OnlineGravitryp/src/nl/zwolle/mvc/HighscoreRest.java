@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/Highscores/")
 public class HighscoreRest {
 	
+	private boolean death = false;
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public List<Highscore> highscores() {
 		List<Highscore> hsl = HighscoreDao.all();
@@ -21,11 +23,16 @@ public class HighscoreRest {
 		return hsl;
 	}
 	
+	@RequestMapping(value = "Check", method=RequestMethod.GET)
+	public void death(boolean collision) {
+		death = collision;
+	}
+	
 	@RequestMapping(value="Verstuur", method=RequestMethod.POST)
 	public boolean add(Highscore score, Model model, HttpSession session) {
-		if(!((boolean) session.getAttribute("sent"))) {
+		if(death) {
 			HighscoreDao.add(score);
-			session.setAttribute("sent", true);
+			death = false;
 			return true;
 		}
 		else {

@@ -142,6 +142,11 @@ $(document).keyup( function(event) {
 		
 		//checks for collision
 		collision = ship.col([earth, mars, jupiter]);
+		
+		$.get("/OnlineGravitryp/Highscores", collision, function() {
+			
+		});
+		
 		if(collision) {
 			$('input[name=score]').val(score);
 			$('#endgame').submit();
