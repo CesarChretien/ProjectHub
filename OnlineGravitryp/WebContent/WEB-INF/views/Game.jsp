@@ -124,10 +124,14 @@ $(document).keyup( function(event) {
 	var ctx = canvas.getContext("2d");
 	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
 	ship.col = hasCollisionWith;
-	var planet = new Planet(new Point(600, 200), 50, 3);
+	var earth = new Planet(new Point(600, 200), 50, 3);
+	var mars = new Planet(new Point(1000, 600), 40, 2.5);
+	var jupiter = new Planet(new Point(100, 700), 70, 3.5);
 	
 	ctx.dp = drawplanet;
-	ctx.dp(planet);
+	ctx.dp(earth);
+	ctx.dp(mars);
+	ctx.dp(jupiter);
 	
 	ctx.ds = drawship;
 	ctx.ds(ship);	
@@ -137,7 +141,7 @@ $(document).keyup( function(event) {
 		ctx.clearRect(0, 0, 1280, 720);
 		
 		//checks for collision
-		collision = ship.col([planet]);
+		collision = ship.col([earth, mars, jupiter]);
 		if(collision) {
 			$('input[name=score]').val(score);
 			$('#endgame').submit();
@@ -159,17 +163,25 @@ $(document).keyup( function(event) {
 				ship.move();
 			}
 			score++;
-			ship.applyGravity([planet]);
+			ship.applyGravity([earth, mars, jupiter]);
 			ship.update($('#myCanvas').width(), $('#myCanvas').height());
 		}
 		
 		ctx.fillText("Score: " + score,100,100);
-		ctx.dp(planet);
+		ctx.dp(earth);
+		ctx.dp(mars);
+		ctx.dp(jupiter);
 		ctx.ds(ship);
 		
 		window.requestAnimationFrame(updateGame);
 	}
+	var x = 0;
 	
+	window.onload = function() {
+		$.get("/OnlineGravitryp/Game", function(){
+			//magic happens
+		});
+	}
 	updateGame();
 </script>
 

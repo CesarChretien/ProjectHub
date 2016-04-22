@@ -25,15 +25,15 @@ $(function () {
 });
 
 function add_score_to_list(highscore){
-	var element = $('<li> <b>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord! abra' +
+	var element = $('<li>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
 					'</b> </li>');
-	$('ul').append(element);
+	$('ol').append(element);
 }
 
 function add_own_score_to_list(highscore){
-	var element = $('<li><b>Naam: ' + highscore.name + '! heeft ' + highscore.score + ' punten gescoord! kadabra' +
+	var element = $('<li><b>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
 					'</b></li>');
-	$('ul').append(element);
+	$('ol').append(element);
 }
 	
 function get_scores(highscore){
@@ -66,23 +66,9 @@ function add() {
 	});
 }
 
-function add_score_to_list(highscore){
-	var element = $('<li>Naam: ' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
-					'</li>');
-	$('ul').append(element);
-}
-	
-function get_scores(){
-	$.get("/OnlineGravitryp/Highscores/", function(data){
-		for(var i=0; i < data.length; ++i){
-			add_score_to_list(data[i]);
-		}
-	});
-}
-
 $(document).ready(function() {
 	$('input[type=submit]').click(add);
-})	
+})
 </script>
 		
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -94,7 +80,7 @@ Voer hier je naam in: <br>
 <input type="text" id="name">
 <input type="submit" value="Verstuur">
 <div id="lijst" hidden=true>Toegevoegd! Lijst van highscores: <br>
-<ul></ul></div>
+<ol></ol></div>
 
 <!-- <ul>
 	<c:forEach var="listValue" items="${list}">
