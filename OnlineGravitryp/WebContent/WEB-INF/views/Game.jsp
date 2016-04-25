@@ -39,6 +39,19 @@ var pause = false;
 var gameover = false;
 var collision = false;
 var score = 0;
+var bgnumber = 0;
+var bg = "resources/Background";
+var cordir = ["left", "right", "up", "down"];
+
+var imgArray = new Array();
+imgArray[0] = new Image();
+imgArray[0].src = bg + (bgnumber++) + ".jpg";
+imgArray[1] = new Image();
+imgArray[1].src = bg + (bgnumber++) + ".jpg";
+imgArray[2] = new Image();
+imgArray[2].src = bg + (bgnumber++) + ".jpg";
+imgArray[3] = new Image();
+imgArray[3].src = bg + (bgnumber) + ".jpg";
 
 this.drawship = function(ship) {
 	var h = ship.sprite.hitbox;
@@ -103,10 +116,6 @@ $(document).keyup( function(event) {
 	display: none;
 }
 
-#myCanvas {
-	background: url("resources/outer-space-wallpaper-pictures.jpg")
-}
-
 </style>
 
 </head>
@@ -121,6 +130,7 @@ $(document).keyup( function(event) {
 
 <script>
 	var canvas = document.getElementById("myCanvas");
+	$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
 	var ctx = canvas.getContext("2d");
 	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
 	ship.col = hasCollisionWith;
@@ -167,9 +177,18 @@ $(document).keyup( function(event) {
 			if(up) {
 				ship.move();
 			}
-			score++;
 			ship.applyGravity([earth, mars, jupiter]);
-			ship.update($('#myCanvas').width(), $('#myCanvas').height());
+			if(!(ship.update($('#myCanvas').width(), $('#myCanvas').height()) === "stay")) {
+				
+				earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius), earth.radius + Math.random() * (720 - 2*earth.radius));
+				mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius), mars.radius + Math.random() * (720 - 2*mars.radius));
+				jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius), jupiter.radius + Math.random() * (720 - 2*jupiter.radius));
+				
+				bgnumber = ++bgnumber % 4;
+				$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
+				
+				score += 100;
+			}
 		}
 		
 		ctx.fillText("Score: " + score,100,100);
@@ -180,14 +199,13 @@ $(document).keyup( function(event) {
 		
 		window.requestAnimationFrame(updateGame);
 	}
-	var x = 0;
+	updateGame();
 	
 	window.onload = function() {
 		$.get("/OnlineGravitryp/Game", function(){
 			//magic happens
 		});
 	}
-	updateGame();
 </script>
 
 </body>
