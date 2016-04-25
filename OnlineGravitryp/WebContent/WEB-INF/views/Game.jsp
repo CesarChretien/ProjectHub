@@ -127,6 +127,7 @@ $(document).keyup( function(event) {
 	var earth = new Planet(new Point(600, 200), 50, 3);
 	var mars = new Planet(new Point(1000, 600), 40, 2.5);
 	var jupiter = new Planet(new Point(100, 700), 70, 3.5);
+	var boom = true;
 	
 	ctx.dp = drawplanet;
 	ctx.dp(earth);
@@ -143,11 +144,10 @@ $(document).keyup( function(event) {
 		//checks for collision
 		collision = ship.col([earth, mars, jupiter]);
 		
-		$.get("/OnlineGravitryp/Highscores", collision, function() {
-			
-		});
-		
 		if(collision) {
+			$.get("/OnlineGravitryp/Highscores/Check", boom, function() {
+				//magic.
+			});
 			$('input[name=score]').val(score);
 			$('#endgame').submit();
 			return;

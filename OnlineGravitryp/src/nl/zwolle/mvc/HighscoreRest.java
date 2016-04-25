@@ -3,9 +3,6 @@ package nl.zwolle.mvc;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,12 +21,12 @@ public class HighscoreRest {
 	}
 	
 	@RequestMapping(value = "Check", method=RequestMethod.GET)
-	public void death(boolean collision) {
-		death = collision;
+	public void death() {
+		death = true;
 	}
 	
 	@RequestMapping(value="Verstuur", method=RequestMethod.POST)
-	public boolean add(Highscore score, Model model, HttpSession session) {
+	public boolean add(Highscore score) {
 		if(death) {
 			HighscoreDao.add(score);
 			death = false;
