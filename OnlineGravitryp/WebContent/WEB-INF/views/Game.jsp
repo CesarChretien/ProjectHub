@@ -41,6 +41,7 @@ var collision = false;
 var score = 0;
 var bgnumber = 0;
 var bg = "resources/Background";
+var cordir = ["left", "right", "up", "down"];
 
 var imgArray = new Array();
 imgArray[0] = new Image();
@@ -177,11 +178,11 @@ $(document).keyup( function(event) {
 				ship.move();
 			}
 			ship.applyGravity([earth, mars, jupiter]);
-			if(ship.update($('#myCanvas').width(), $('#myCanvas').height())) {
+			if(!(ship.update($('#myCanvas').width(), $('#myCanvas').height()) === "stay")) {
 				
-				earth.relocate(earth.radius + Math.random() * (1280 - earth.radius), earth.radius + Math.random() * (720 - earth.radius));
-				mars.relocate(mars.radius + Math.random() * (1280 - mars.radius), mars.radius + Math.random() * (720 - mars.radius));
-				jupiter.relocate(jupiter.radius + Math.random() * (1280 - jupiter.radius), jupiter.radius + Math.random() * (720 - jupiter.radius));
+				earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius), earth.radius + Math.random() * (720 - 2*earth.radius));
+				mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius), mars.radius + Math.random() * (720 - 2*mars.radius));
+				jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius), jupiter.radius + Math.random() * (720 - 2*jupiter.radius));
 				
 				bgnumber = ++bgnumber % 4;
 				$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");

@@ -57,10 +57,21 @@ function Ship(centre, shape, xwidth, ywidth, shipdir, velocity) {
 	}
 	
 	this.update = function(width, height) {
-		var pb = (this.sprite.centre.x + this.velocity.x) < 0 || 
-				 (this.sprite.centre.y + this.velocity.y) < 0 ||
-				 (this.sprite.centre.x + this.velocity.x) > width ||
-				 (this.sprite.centre.y + this.velocity.y) > height;
+		if((this.sprite.centre.x + this.velocity.x) < 0) {
+			var pb = "left";
+		}
+		else if((this.sprite.centre.y + this.velocity.y) < 0) {
+			var pb = "up";
+		}
+		else if((this.sprite.centre.x + this.velocity.x) > width) {
+			var pb = "right";
+		}
+		else if((this.sprite.centre.y + this.velocity.y) > height) {
+			var pb = "down";
+		}
+		else {
+			var pb = "stay";
+		}
 		this.sprite.centre.x = (this.sprite.centre.x + this.velocity.x + width) % width;
 		this.sprite.centre.y = (this.sprite.centre.y + this.velocity.y + height) % height;
 		this.sprite.setHitbox(this.sprite.centre, this.sprite.direction);
