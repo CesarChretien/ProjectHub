@@ -16,6 +16,7 @@
 <script src="resources/Planet.js"></script>
 <script src="resources/Ship.js"></script>
 <script src="resources/DrawShip.js"></script>
+<script src="resources/Relocate.js"></script>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
@@ -46,6 +47,7 @@ var down = false;
 var pause = false;
 var gameover = false;
 var collision = false;
+var boom = true;
 var score = 0;
 var bgnumber = 0;
 var bg = "resources/Background";
@@ -80,13 +82,30 @@ this.drawship = function(ship) {
 	this.closePath();
 }
 
-this.drawplanet = function(planet) {
-	this.beginPath();
-	this.arc(planet.sprite.centre.x, planet.sprite.centre.y, planet.radius, 0, 2*Math.PI);
-	this.stroke();
-	this.strokeStyle = "white";
-	this.closePath();
+this.drawplanets = function(planets) {
+	for(var i = 0; i < planets.length; i++) {
+		this.beginPath();
+		this.arc(planets[i].sprite.centre.x, planets[i].sprite.centre.y, planets[i].radius, 0, 2*Math.PI);
+		this.stroke();
+		this.strokeStyle = "white";
+		this.closePath();
+	}
 }
+
+var ship = new Ship(new Point(400, 400), "triangle", 43, 39, new Point(1, 0), new Point(0, 0));
+ship.col = hasCollisionWith;
+
+var earth = new Planet(new Point(600, 200), 50, 3);
+var mars = new Planet(new Point(1000, 600), 40, 2.5);
+var jupiter = new Planet(new Point(100, 700), 70, 3.5);
+var planets = [earth, mars, jupiter];
+planets.relocate = Relocate;
+
+var anim = {
+		D: 39,
+		LR: 30,
+		ang: 0,		
+	};
 
 $(document).keydown( function(event) {
 	if(event.which == 32) {
@@ -132,8 +151,6 @@ $(document).keyup( function(event) {
 }
 
 </style>
-
-
 </head>
 
 <body>
@@ -149,30 +166,16 @@ $(document).keyup( function(event) {
 	$('#myCanvas').attr({width:canWidth, height:canHeight}).css({width:scrWidth,height:scrHeight});
 	$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
 	var ctx = canvas.getContext("2d");
-	var ship = new Ship(new Point(400, 400), "triangle", 43, 39, new Point(1, 0), new Point(0, 0));
-	ship.col = hasCollisionWith;
-	var earth = new Planet(new Point(600, 200), 50, 3);
-	var mars = new Planet(new Point(1000, 600), 40, 2.5);
-	var jupiter = new Planet(new Point(100, 700), 70, 3.5);
-	var boom = true;
-	var anim = {
-		D: 39,
-		LR: 3,
-		ang: 0,		
-	};
-	
-	ctx.dp = drawplanet;
-	ctx.dp(earth);
-	ctx.dp(mars);
-	ctx.dp(jupiter);
+
+	ctx.dp = drawplanets;
+	ctx.dp(planets);
 	
 	ctx.ds = drawship;
 	ctx.ds(ship);	
 	
 	ctx.drawShip = DrawShip;
-	
-	ctx.fillStyle = "white";
 	function updateGame() {
+		//clears the canvas
 		ctx.clearRect(0, 0, canWidth, canHeight);
 		
 		//checks for collision
@@ -201,9 +204,7 @@ $(document).keyup( function(event) {
 			if(up) {
 				ship.move();
 			}
-			ship.applyGravity([earth, mars, jupiter]);
-			
-			
+			ship.applyGravity(planets);
 			
 			var direction = ship.update(canWidth, canHeight);
 
@@ -212,30 +213,7 @@ $(document).keyup( function(event) {
 			var rightway = cordir[Math.floor(Math.random() * 4)];
 			
 			if(!(direction === "stay")) {
-				
-				if(direction === "left") {
-					earth.relocate(earth.radius + Math.random() * (canWidth - 2*earth.radius - 100), earth.radius + Math.random() * (canHeight - 2*earth.radius));
-					mars.relocate(mars.radius + Math.random() * (canWidth - 2*mars.radius - 100), mars.radius + Math.random() * (canHeight - 2*mars.radius));
-					jupiter.relocate(jupiter.radius + Math.random() * (canWidth - 2*jupiter.radius - 100), jupiter.radius + Math.random() * (canHeight - 2*jupiter.radius));
-				}
-				
-				if(direction === "right") {
-					earth.relocate(earth.radius + Math.random() * (canWidth - 2*earth.radius + 100), earth.radius + Math.random() * (canHeight - 2*earth.radius));
-					mars.relocate(mars.radius + Math.random() * (canWidth - 2*mars.radius + 100), mars.radius + Math.random() * (canHeight - 2*mars.radius));
-					jupiter.relocate(jupiter.radius + Math.random() * (canWidth - 2*jupiter.radius + 100), jupiter.radius + Math.random() * (canHeight - 2*jupiter.radius));
-				}
-				
-				if(direction === "up") {
-					earth.relocate(earth.radius + Math.random() * (canWidth - 2*earth.radius), earth.radius + Math.random() * (canHeight - 2*earth.radius - 70));
-					mars.relocate(mars.radius + Math.random() * (canWidth - 2*mars.radius), mars.radius + Math.random() * (canHeight - 2*mars.radius - 70));
-					jupiter.relocate(jupiter.radius + Math.random() * (canWidth - 2*jupiter.radius), jupiter.radius + Math.random() * (canHeight - 2*jupiter.radius - 70));
-				}
-				
-				if(direction === "down") {
-					earth.relocate(earth.radius + Math.random() * (canWidth - 2*earth.radius), earth.radius + Math.random() * (canHeight - 2*earth.radius + 70));
-					mars.relocate(mars.radius + Math.random() * (canWidth - 2*mars.radius), mars.radius + Math.random() * (canHeight - 2*mars.radius + 70));
-					jupiter.relocate(jupiter.radius + Math.random() * (canWidth - 2*jupiter.radius), jupiter.radius + Math.random() * (canHeight - 2*jupiter.radius + 70));
-				}
+				planets.relocate(direction, canWidth, canHeight);
 				
 				bgnumber = ++bgnumber % 4;
 				$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
@@ -248,11 +226,12 @@ $(document).keyup( function(event) {
 				}
 			}
 		}
+		else {
+			ctx.drawShip(ship, false, false, false, false, anim);
+		}
 		
 		ctx.fillText("Score: " + score,100,100);
-		ctx.dp(earth);
-		ctx.dp(mars);
-		ctx.dp(jupiter);
+		ctx.dp(planets);
 		ctx.ds(ship);
 		
 		window.requestAnimationFrame(updateGame);
