@@ -155,9 +155,11 @@ $(document).keyup( function(event) {
 	var mars = new Planet(new Point(1000, 600), 40, 2.5);
 	var jupiter = new Planet(new Point(100, 700), 70, 3.5);
 	var boom = true;
-	var animD = 39;
-	var animLR = 30;
-	var dAngle = 0;
+	var anim = {
+		D: 39,
+		LR: 3,
+		ang: 0,		
+	};
 	
 	ctx.dp = drawplanet;
 	ctx.dp(earth);
@@ -205,9 +207,7 @@ $(document).keyup( function(event) {
 			
 			var direction = ship.update(canWidth, canHeight);
 
-			dAngle = ctx.drawShip(ship, up, down, left, right, animD, animLR, dAngle);
-			animD = animD % 78 + 39;
-			animLR = animLR % 60 + 30;
+			anim = ctx.drawShip(ship, up, down, left, right, anim);
 			
 			var rightway = cordir[Math.floor(Math.random() * 4)];
 			
