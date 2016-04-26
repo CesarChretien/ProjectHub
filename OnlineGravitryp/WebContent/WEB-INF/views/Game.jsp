@@ -53,6 +53,13 @@ imgArray[2].src = bg + (bgnumber++) + ".jpg";
 imgArray[3] = new Image();
 imgArray[3].src = bg + (bgnumber) + ".jpg";
 
+var imgShipLeft = new Image();
+imgShipLeft.src = "resources/rotateL.png";
+var imgShipRight = new Image();
+imgShipRight.src = "resources/rotateR.png";
+var imgShipDefault = new Image();
+imgShipDefault.src = "resources/default.png";
+
 this.drawship = function(ship) {
 	var h = ship.sprite.hitbox;
 	this.beginPath();
@@ -132,12 +139,15 @@ $(document).keyup( function(event) {
 	var canvas = document.getElementById("myCanvas");
 	$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
 	var ctx = canvas.getContext("2d");
-	var ship = new Ship(new Point(400, 400), "triangle", 64, 32, new Point(1, 0), new Point(0, 0));
+	var ship = new Ship(new Point(400, 400), "triangle", 43, 39, new Point(1, 0), new Point(0, 0));
 	ship.col = hasCollisionWith;
 	var earth = new Planet(new Point(600, 200), 50, 3);
 	var mars = new Planet(new Point(1000, 600), 40, 2.5);
 	var jupiter = new Planet(new Point(100, 700), 70, 3.5);
 	var boom = true;
+	var animD = 39;
+	var animLR = 30;
+	var dAngle = 0;
 	
 	ctx.dp = drawplanet;
 	ctx.dp(earth);
@@ -178,16 +188,105 @@ $(document).keyup( function(event) {
 				ship.move();
 			}
 			ship.applyGravity([earth, mars, jupiter]);
-			if(!(ship.update($('#myCanvas').width(), $('#myCanvas').height()) === "stay")) {
+			
+			
+			
+			var direction = ship.update($('#myCanvas').width(), $('#myCanvas').height());
+			
+			if(up || down) {
+				if(left) {
+					ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+					ctx.rotate((dAngle = (360 + dAngle - ship.rotspd) % 360)*(Math.PI/180.0));
+					ctx.drawImage(imgShipLeft,0,animLR,43,30,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,30);
+					ctx.rotate(-dAngle*(Math.PI/180.0));
+					ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+					animD = animD % 78 + 39;
+					animLR = animLR % 60 + 30;
+				}
+				else if(right) {
+					ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+					ctx.rotate((dAngle = (360 + dAngle + ship.rotspd) % 360)*(Math.PI/180.0));
+					ctx.drawImage(imgShipRight,0,animLR,43,30,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,30);
+					ctx.rotate(-dAngle*(Math.PI/180.0));
+					ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+					animD = animD % 78 + 39;
+					animLR = animLR % 60 + 30;
+				}
+				else {
+					ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+					ctx.rotate(dAngle*(Math.PI/180.0));
+					ctx.drawImage(imgShipDefault,0,animD,43,39,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,39);
+					ctx.rotate(-dAngle*(Math.PI/180.0));
+					ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+					animD = animD % 78 + 39;
+					animLR = animLR % 60 + 30;
+				}
+			}
+			else if (left) {
+				ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+				ctx.rotate((dAngle = (360 + dAngle - ship.rotspd) % 360)*(Math.PI/180.0));
+				ctx.drawImage(imgShipLeft,0,0,43,30,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,30);
+				ctx.rotate(-dAngle*(Math.PI/180.0));
+				ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+				animD = animD % 78 + 39;
+				animLR = animLR % 60 + 30;
+			}
+			else if (right) {
+				ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+				ctx.rotate((dAngle = (360 + dAngle + ship.rotspd) % 360)*(Math.PI/180.0));
+				ctx.drawImage(imgShipRight,0,0,43,30,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,30);
+				ctx.rotate(-dAngle*(Math.PI/180.0));
+				ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+				animD = animD % 78 + 39;
+				animLR = animLR % 60 + 30;
+			}
+			else {
+				ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+				ctx.rotate(dAngle*(Math.PI/180.0));
+				ctx.drawImage(imgShipDefault,0,0,43,39,-(ship.sprite.xwidth/2 + 7), -ship.sprite.ywidth/2,43,39);
+				ctx.rotate(-dAngle*(Math.PI/180.0));
+				ctx.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
+				animD = animD % 78 + 39;
+				animLR = animLR % 60 + 30;
+			}
+			
+			var rightway = cordir[Math.floor(Math.random() * 4)];
+			
+			if(!(direction === "stay")) {
 				
-				earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius), earth.radius + Math.random() * (720 - 2*earth.radius));
-				mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius), mars.radius + Math.random() * (720 - 2*mars.radius));
-				jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius), jupiter.radius + Math.random() * (720 - 2*jupiter.radius));
+				if(direction === "left") {
+					earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius - 100), earth.radius + Math.random() * (720 - 2*earth.radius));
+					mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius - 100), mars.radius + Math.random() * (720 - 2*mars.radius));
+					jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius - 100), jupiter.radius + Math.random() * (720 - 2*jupiter.radius));
+				}
+				
+				if(direction === "right") {
+					earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius + 100), earth.radius + Math.random() * (720 - 2*earth.radius));
+					mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius + 100), mars.radius + Math.random() * (720 - 2*mars.radius));
+					jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius + 100), jupiter.radius + Math.random() * (720 - 2*jupiter.radius));
+				}
+				
+				if(direction === "up") {
+					earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius), earth.radius + Math.random() * (720 - 2*earth.radius - 70));
+					mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius), mars.radius + Math.random() * (720 - 2*mars.radius - 70));
+					jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius), jupiter.radius + Math.random() * (720 - 2*jupiter.radius - 70));
+				}
+				
+				if(direction === "down") {
+					earth.relocate(earth.radius + Math.random() * (1280 - 2*earth.radius), earth.radius + Math.random() * (720 - 2*earth.radius + 70));
+					mars.relocate(mars.radius + Math.random() * (1280 - 2*mars.radius), mars.radius + Math.random() * (720 - 2*mars.radius + 70));
+					jupiter.relocate(jupiter.radius + Math.random() * (1280 - 2*jupiter.radius), jupiter.radius + Math.random() * (720 - 2*jupiter.radius + 70));
+				}
 				
 				bgnumber = ++bgnumber % 4;
 				$('#myCanvas').css("background-image", "url(" + imgArray[bgnumber].src + ")");
 				
-				score += 100;
+				if(direction === rightway) {
+					score += 100;
+				}
+				else {
+					score = Math.round(score/2);
+				}
 			}
 		}
 		
