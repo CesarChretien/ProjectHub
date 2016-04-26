@@ -10,6 +10,7 @@ public class SimpleController {
 
 	@RequestMapping(value="/Game", method=RequestMethod.GET)
 	public void makeGame() {
+		//runs the game.
 	}
 
 	@RequestMapping(value="/Highscores", method=RequestMethod.POST) 

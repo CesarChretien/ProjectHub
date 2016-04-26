@@ -26,7 +26,7 @@ $(function () {
 
 function add_score_to_list(highscore){
 	var element = $('<li>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
-					'</b> </li>');
+					'</li>');
 	$('ol').append(element);
 }
 
