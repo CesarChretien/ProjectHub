@@ -37,8 +37,8 @@ $(function () {
 var canWidth = 1280;
 var canHeight = 720;
 //size of game screen
-var scrWidth = Math.min(0.9*$(window).width(), canWidth);
-var scrHeight = Math.min(0.9*$(window).height(), canHeight);
+var scrWidth = Math.min(0.95*$(window).width(), canWidth);
+var scrHeight = Math.min(0.95*$(window).height(), canHeight);
 
 var left = false;
 var right = false;
@@ -52,6 +52,7 @@ var score = 0;
 var bgnumber = 0;
 var bg = "resources/Background";
 var cordir = ["left", "right", "up", "down"];
+var shipslow = 2;
 
 var imgArray = new Array();
 imgArray[0] = new Image();
@@ -104,7 +105,8 @@ planets.relocate = Relocate;
 var anim = {
 		D: 39,
 		LR: 30,
-		ang: 0,		
+		ang: 0,	
+		slow: 0,
 	};
 
 $(document).keydown( function(event) {
@@ -179,7 +181,7 @@ $(document).keyup( function(event) {
 		ctx.clearRect(0, 0, canWidth, canHeight);
 		
 		//checks for collision
-		collision = ship.col([earth, mars, jupiter]);
+		collision = ship.col(planets);
 		
 		if(collision) {
 			$.get("/OnlineGravitryp/Highscores/Check", boom, function() {
@@ -208,7 +210,7 @@ $(document).keyup( function(event) {
 			
 			var direction = ship.update(canWidth, canHeight);
 
-			anim = ctx.drawShip(ship, up, down, left, right, anim);
+			anim = ctx.drawShip(ship, up, down, left, right, anim, shipslow);
 			
 			var rightway = cordir[Math.floor(Math.random() * 4)];
 			
@@ -227,7 +229,7 @@ $(document).keyup( function(event) {
 			}
 		}
 		else {
-			ctx.drawShip(ship, false, false, false, false, anim);
+			ctx.drawShip(ship, false, false, false, false, anim, shipslow);
 		}
 		
 		ctx.fillText("Score: " + score,100,100);
