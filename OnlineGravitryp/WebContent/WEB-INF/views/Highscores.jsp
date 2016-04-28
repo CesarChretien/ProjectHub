@@ -31,7 +31,7 @@ function add_score_to_list(highscore){
 }
 
 function add_own_score_to_list(highscore){
-	var element = $('<li><b>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
+	var element = $('<li style="color:red"><b>' + highscore.name + ' heeft ' + highscore.score + ' punten gescoord!' +
 					'</b></li>');
 	$('ol').append(element);
 }
@@ -70,6 +70,18 @@ $(document).ready(function() {
 	$('input[type=submit]').click(add);
 })
 </script>
+
+<style>
+@font-face {
+    font-family: 'PS2P';
+    src: url('resources/PressStart2P.ttf'); 
+}
+
+#lst {
+	font-family: 'PS2P';
+	font-size: 12px;
+}
+</style>
 		
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
@@ -80,12 +92,7 @@ Voer hier je naam in: <br>
 <input type="text" id="name">
 <input type="submit" value="Verstuur">
 <div id="lijst" hidden=true>Toegevoegd! Lijst van highscores: <br>
-<ol></ol></div>
+<ol id="lst"></ol></div>
 
-<!-- <ul>
-	<c:forEach var="listValue" items="${list}">
-		<li>${listValue}</li>
-	</c:forEach> 
-</ul> -->
 </body>
 </html>

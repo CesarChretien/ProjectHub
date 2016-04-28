@@ -2,7 +2,7 @@
  * 
  */
 function DrawShip(ship, up, down, left, right, anim, shipslow) {
-	ctx.translate(ship.sprite.centre.x, ship.sprite.centre.y);
+	this.translate(ship.sprite.centre.x, ship.sprite.centre.y);
 	if(up || down) {
 		if(left) {
 			ship.sprite.ywidth = 30;
@@ -48,9 +48,9 @@ function DrawShip(ship, up, down, left, right, anim, shipslow) {
 		this.rotate(-anim.ang*(Math.PI/180.0));
 	}
 	this.translate(-(ship.sprite.centre.x), -(ship.sprite.centre.y));
-	if(anim.slow++ % shipslow == 0) {
+	if(++anim.slow % shipslow == 0) {
+		anim.slow = 0;
 		anim.D = anim.D % 78 + 39;
 		anim.LR = anim.LR % 60 + 30;
 	}
-	return anim;
 }

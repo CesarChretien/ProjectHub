@@ -16,7 +16,11 @@
 <script src="resources/Planet.js"></script>
 <script src="resources/Ship.js"></script>
 <script src="resources/DrawShip.js"></script>
+<script src="resources/DrawMars.js"></script>
+<script src="resources/DrawEarth.js"></script>
+<script src="resources/DrawJupiter.js"></script>
 <script src="resources/Relocate.js"></script>
+<script src="resources/Hint.js"></script>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
@@ -53,6 +57,8 @@ var bgnumber = 0;
 var bg = "resources/Background";
 var cordir = ["left", "right", "up", "down"];
 var shipslow = 2;
+var planetslow = 5;
+var showhb = false;
 
 var imgArray = new Array();
 imgArray[0] = new Image();
@@ -70,6 +76,14 @@ var imgShipRight = new Image();
 imgShipRight.src = "resources/rotateR.png";
 var imgShipDefault = new Image();
 imgShipDefault.src = "resources/default.png";
+var imgPlanetMars = new Image();
+imgPlanetMars.src = "resources/planet0.png";
+var imgPlanetEarth = new Image();
+imgPlanetEarth.src = "resources/planet1.png";
+var imgPlanetJupiter = new Image();
+imgPlanetJupiter.src = "resources/planet2.png";
+var imgHint = new Image();
+imgHint.src = "resources/hint.png";
 
 this.drawship = function(ship) {
 	var h = ship.sprite.hitbox;
@@ -96,9 +110,12 @@ this.drawplanets = function(planets) {
 var ship = new Ship(new Point(400, 400), "triangle", 43, 39, new Point(1, 0), new Point(0, 0));
 ship.col = hasCollisionWith;
 
-var earth = new Planet(new Point(600, 200), 50, 3);
-var mars = new Planet(new Point(1000, 600), 40, 2.5);
-var jupiter = new Planet(new Point(100, 700), 70, 3.5);
+var hint = new Hint(new Point(200, 200), 50, 50, new Point(1, 0));
+hint.col = hasCollisionWith;
+
+var earth = new Planet(new Point(600, 200), 50, 14);
+var mars = new Planet(new Point(1000, 600), 40, 12);
+var jupiter = new Planet(new Point(100, 700), 70, 17);
 var planets = [earth, mars, jupiter];
 planets.relocate = Relocate;
 
@@ -106,6 +123,23 @@ var anim = {
 		D: 39,
 		LR: 30,
 		ang: 0,	
+		slow: 0,
+	};
+	
+var animM = {
+		x: 0,
+		y: 0,
+		slow: 0,
+	};
+	
+var animA = {
+		x: 0,
+		y: 0,
+		slow: 0,
+	};
+var animJ = {
+		x: 0,
+		y: 0,
 		slow: 0,
 	};
 
@@ -127,6 +161,9 @@ $(document).keydown( function(event) {
 	}
 	if(event.which == 81) {
 		gameover = true;
+	}
+	if(event.which == 72) {
+		showhb = !showhb;
 	}
 });
 
@@ -152,6 +189,11 @@ $(document).keyup( function(event) {
 	display: none;
 }
 
+@font-face {
+    font-family: 'PS2P';
+    src: url('resources/PressStart2P.ttf'); 
+}
+
 </style>
 </head>
 
@@ -170,12 +212,15 @@ $(document).keyup( function(event) {
 	var ctx = canvas.getContext("2d");
 
 	ctx.dp = drawplanets;
-	ctx.dp(planets);
-	
-	ctx.ds = drawship;
-	ctx.ds(ship);	
+	ctx.ds = drawship;	
 	
 	ctx.drawShip = DrawShip;
+	ctx.drawMars = DrawMars;
+	ctx.drawEarth = DrawEarth;
+	ctx.drawJupiter = DrawJupiter;
+	
+	ctx.fillStyle = "white";
+	ctx.font = "20px PS2P";
 	function updateGame() {
 		//clears the canvas
 		ctx.clearRect(0, 0, canWidth, canHeight);
@@ -210,7 +255,11 @@ $(document).keyup( function(event) {
 			
 			var direction = ship.update(canWidth, canHeight);
 
-			anim = ctx.drawShip(ship, up, down, left, right, anim, shipslow);
+			ctx.drawShip(ship, up, down, left, right, anim, shipslow);
+			hint.draw(imgHint, ctx);
+			ctx.drawMars(mars, animM, planetslow);
+			ctx.drawEarth(earth, animA, planetslow);
+			ctx.drawJupiter(jupiter, animJ, planetslow);
 			
 			var rightway = cordir[Math.floor(Math.random() * 4)];
 			
@@ -230,11 +279,16 @@ $(document).keyup( function(event) {
 		}
 		else {
 			ctx.drawShip(ship, false, false, false, false, anim, shipslow);
+			ctx.drawMars(mars, animM, planetslow);
+			ctx.drawEarth(earth, animA, planetslow);
+			ctx.drawJupiter(jupiter, animJ, planetslow);
 		}
 		
-		ctx.fillText("Score: " + score,100,100);
-		ctx.dp(planets);
-		ctx.ds(ship);
+		ctx.fillText("Score: " + score, 10 , 30);
+		if(showhb) {
+			ctx.dp(planets);
+			ctx.ds(ship);
+		}
 		
 		window.requestAnimationFrame(updateGame);
 	}
