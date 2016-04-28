@@ -110,7 +110,7 @@ this.drawplanets = function(planets) {
 var ship = new Ship(new Point(400, 400), "triangle", 43, 39, new Point(1, 0), new Point(0, 0));
 ship.col = hasCollisionWith;
 
-var hint = new Hint(new Point(200, 200), 50, 50, new Point(1, 0));
+var hint = new Hint(new Point(200, 200), 25, new Point(1, 0));
 hint.col = hasCollisionWith;
 
 var earth = new Planet(new Point(600, 200), 50, 14);

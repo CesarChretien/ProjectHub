@@ -1,8 +1,9 @@
 /**
  * 
  */
-function Hint(centre, xwidth, ywidth, dir) {
-	this.sprite = new Sprite(centre, "circle", xwidth, ywidth, new Point(1, 0));
+function Hint(centre, radius, dir) {
+	
+	this.sprite = new Sprite(centre, "circle", 2*radius, 2*radius, new Point(1, 0));
 	this.radius = radius;
 	if(dir === "right") {
 		this.angle = 0;
